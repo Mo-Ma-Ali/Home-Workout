@@ -12,10 +12,10 @@ class Exercise extends Model
 
 
 
-    public function level()
-    {
-        return $this->belongsTo(Levels::class);
-    }
+    // public function level()
+    // {
+    //     return $this->belongsTo(Levels::class);
+    // }
 
     public function muscle()
     {
