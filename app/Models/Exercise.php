@@ -19,6 +19,6 @@ class Exercise extends Model
 
     public function muscle()
     {
-        return $this->belongsTo(Muscle::class);
+        return $this->belongsToMany(Category::class);
     }
 }
