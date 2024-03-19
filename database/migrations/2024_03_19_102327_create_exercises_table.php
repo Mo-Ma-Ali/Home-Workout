@@ -13,15 +13,11 @@ return new class extends Migration
     {
         Schema::create('exercises', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('level_id');
-            $table->unsignedBigInteger('muscle_id');
             $table->string('name');
-            $table->text('description');
-            $table->enum('difficulty', ['beginner', 'intermediate', 'advanced']);
+            $table->string('description');
+            $table->string('image');
+            $table->string('video');
             $table->timestamps();
-
-            $table->foreign('level_id')->references('id')->on('levels')->onDelete('cascade');
-            $table->foreign('muscle_id')->references('id')->on('muscles')->onDelete('cascade');
         });
     }
 
