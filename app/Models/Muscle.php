@@ -12,4 +12,8 @@ class Muscle extends Model
     {
         return $this->hasMany(Exercise::class);
     }
+    public function Level()
+    {
+        return $this->belongsTo(Levels::class);
+    }
 }
