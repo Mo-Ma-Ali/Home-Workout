@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Workout;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exercise;
-use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 
 class ExerciseController extends Controller
@@ -38,37 +37,20 @@ class ExerciseController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        Exercise::insert(
-            [
-                [
-                    'Level_id'=>1,
-                    'category_id'=>1,
-                    'name' => 'Push-up',
-                    'description' => 'A basic exercise for the chest and arms.',
-                    'image' => 'push_up.jpg',
-                    'video' => 'push_up_video.mp4',
-                ],
-                [
-                    'Level_id'=>1,
-                    'category_id'=>1,
-                    'name' => 'Squats',
-                    'description' => 'Great for the legs and glutes.',
-                    'image' => 'squats.jpg',
-                    'video' => 'squats_video.mp4',
-                ],
-                [
-                    'Level_id'=>1,
-                    'category_id'=>1,
-                    'name' => 'Plank',
-                    'description' => 'Core-strengthening exercise.',
-                    'image' => 'plank.jpg',
-                    'video' => 'plank_video.mp4',
-                ],
-            ]
-            );
-            return response()->json(['massage'=>'done'],201);
-    }
+{
+    $validatedData = $request->validate([
+        'Level_id' => 'required|integer',
+        'category_id' => 'required|integer',
+        'name' => 'required|string',
+        'description' => 'required|string',
+        'image' => 'required|string',
+        'video' => 'required|string',
+    ]);
+
+    $exercise = Exercise::create($validatedData);
+
+    return response()->json(['message' => 'Exercise created successfully', 'exercise' => $exercise], 201);
+}
 
     /**
      * Display the specified resource.

@@ -22,6 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::resource('level', LevelsController::class);
-Route::resource('exercise',CategoryController::class);
-Route::resource('category',ExerciseController::class);
-Route::get('categaroy/get', [ExerciseController::class,'index']);
+Route::resource('categaroy',CategoryController::class);
+Route::resource('exercise',ExerciseController::class);
