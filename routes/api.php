@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Workout\CategoryController;
+use App\Http\Controllers\Workout\ExerciseController;
+use App\Http\Controllers\Workout\LevelsController;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::resource('level', LevelsController::class);
+Route::resource('exercise',CategoryController::class);
+Route::resource('category',ExerciseController::class);
+Route::get('categaroy/get', [ExerciseController::class,'index']);

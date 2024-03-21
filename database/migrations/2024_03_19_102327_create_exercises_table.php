@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('exercises', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('Level_id')->constrained('levels');
+            $table->foreignId('category_id')->constrained('categories');
             $table->string('name');
             $table->string('description');
             $table->string('image');

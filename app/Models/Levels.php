@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Levels extends Model
 {
+    protected $fillable = [
+        'level'
+    ];
     use HasFactory;
     public function exercises()
     {
