@@ -5,15 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class Cate extends Model
 {
     use HasFactory;
-    public function exercises()
+    public function exercises(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Exercise::class);
-    }
-    public function Level()
-    {
-        return $this->belongsTo(Levels::class);
     }
 }

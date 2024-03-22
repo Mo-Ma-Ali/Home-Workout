@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('details', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('Level_id')->constrained('levels');
-            $table->foreignId('exercise_id')->constrained('exercises');
-            $table->string('name');
+            $table->string('Age');
+            $table->string('weight');
+            $table->string('height');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('details');
     }
 };

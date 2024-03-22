@@ -12,13 +12,13 @@ class Exercise extends Model
 
 
 
-    public function level()
-    {
-        return $this->belongsTo(Levels::class);
-    }
+    // public function level()
+    // {
+    //     return $this->belongsTo(Levels::class);
+    // }
 
-    public function muscle()
+    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsTo(Cate::class);
     }
 }
