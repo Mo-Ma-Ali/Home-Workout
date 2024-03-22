@@ -25,6 +25,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('search/{id}',[\App\Http\Controllers\Search::class,'Search']);
 Route::post('add',[\App\Http\Controllers\UserController::class,'Add']);
 Route::resource('level', LevelsController::class);
-Route::resource('exercise',CategoryController::class);
-Route::resource('category',ExerciseController::class);
-Route::get('categaroy/get', [ExerciseController::class,'index']);
+Route::resource('categaroy',CategoryController::class);
+Route::resource('exercise',ExerciseController::class);
