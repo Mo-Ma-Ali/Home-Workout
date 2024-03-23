@@ -52,7 +52,15 @@ class ExerciseController extends Controller
         'date'=> 'required|integer',
         'video' => 'required|string',
     ]);
+    $existingExercise = Exercise::where([
+        'Level_id' => $validatedData['Level_id'],
+        'category_id' => $validatedData['category_id'],
+        'name' => $validatedData['name'],
+    ])->first();
 
+    if ($existingExercise) {
+        return response()->json(['message' => 'The exercise already exists'], 409);
+    }
     $exercise = Exercise::create($validatedData);
 
     return response()->json(['message' => 'Exercise created successfully', 'exercise' => $exercise], 201);
