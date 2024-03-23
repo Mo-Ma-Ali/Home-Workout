@@ -29,6 +29,7 @@ class ExerciseController extends Controller
                                                         where('Level_id',$level_id)->
                                                         where('category_id',$category_id)
                                                         ->count();
+    //Note: add the next day to apply the addition later
             if($completedCount < 8)
             $percentageIncrease = ($completedCount * 1.5);
             else
