@@ -50,7 +50,6 @@ class ExerciseController extends Controller
         'name' => 'required|string',
         'description' => 'required|string',
         'date'=> 'required|integer',
-        'image' => 'required|string',
         'video' => 'required|string',
     ]);
 
