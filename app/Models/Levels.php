@@ -15,4 +15,8 @@ class Levels extends Model
     {
         return $this->hasMany(Exercise::class);
     }
+    public function WorkoutCompletion()
+    {
+        return $this->hasMany(WorkoutCompletion::class);
+    }
 }

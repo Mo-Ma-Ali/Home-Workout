@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Workout;
 
 use App\Http\Controllers\Controller;
 use App\Models\Exercise;
+use App\Models\WorkoutCompletion;
 use Illuminate\Http\Request;
 
 class ExerciseController extends Controller
@@ -16,13 +17,27 @@ class ExerciseController extends Controller
         $level_id = $request->query('level_id');
         $category_id = $request->query('category_id');
 
-        $exercise = Exercise::where('Level_id', $level_id)
+        $exercises = Exercise::where('Level_id', $level_id)
                             ->where('category_id', $category_id)
                             ->get();
 
-        if(!$exercise->isEmpty())
-        return response()->json(['message' => 'third page', 'Categories' => $exercise], 200);
-    return response()->json(['message' => 'third page', 'Categories' => 'not found'], 404);
+        if($exercises->isEmpty())
+            return response()->json(['message' => 'third page', 'Categories' => 'not found'], 404);
+
+            $userId = 1;
+            $completedCount = WorkoutCompletion::where('user_id', $userId)->
+                                                        where('Level_id',$level_id)->
+                                                        where('category_id',$category_id)
+                                                        ->count();
+            if($completedCount < 8)
+            $percentageIncrease = ($completedCount * 1.5);
+            else
+            $percentageIncrease = 12;
+            foreach ($exercises as $exercise) {
+                $exercise->date += $percentageIncrease;
+                $exercise->date = intval($exercise->date);
+            }
+        return response()->json(['message' => 'third page', 'Categories' => $exercises], 200);
     }
 
     /**
@@ -43,6 +58,7 @@ class ExerciseController extends Controller
         'category_id' => 'required|integer',
         'name' => 'required|string',
         'description' => 'required|string',
+        'date'=> 'required|integer',
         'image' => 'required|string',
         'video' => 'required|string',
     ]);
