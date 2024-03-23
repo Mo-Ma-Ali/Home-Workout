@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Exercise extends Model
 {
     use HasFactory;
-    protected $fillable = ['Level_id', 'category_id', 'name', 'description', 'image', 'video'];
+    protected $fillable = ['Level_id', 'category_id', 'name', 'description', 'date', 'video'];
 
 
     public function level()
