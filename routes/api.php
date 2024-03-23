@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\Workout\CategoryController;
 use App\Http\Controllers\Workout\ExerciseController;
 use App\Http\Controllers\Workout\LevelsController;
@@ -31,4 +32,8 @@ Route::post('add',[\App\Http\Controllers\UserController::class,'Add']);
 Route::resource('level', LevelsController::class);
 Route::resource('categaroy',CategoryController::class);
 Route::resource('exercise',ExerciseController::class);
+
 Route::post('advice',[\App\Http\Controllers\coach::class,'advice']);
+Route::post('/is_done',[TestController::class,'verfiyCategory']);
+Route::get('/record',[TestController::class,'getRecord']);
+

@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Exercise extends Model
+class WorkoutCompletion extends Model
 {
     use HasFactory;
-    protected $fillable = ['Level_id', 'category_id', 'name', 'description', 'date', 'video'];
-
+    protected $fillable=[
+        'user_id',
+        'Level_id',
+        'category_id',
+        'is_done',
+    ];
 
     public function level()
     {

@@ -12,10 +12,10 @@ class Search extends Controller
         $se=Exercise::query()->where('name','like',$search)->get()->first();
         if (!$se)
         {
-            return response()->json(['message'=>'Notfound']);
+            return response()->json(['message'=>'Notfound'],404);
         }
         else {
-            return response()->json(['Exercise' => $se], 201);
+            return response()->json(['Exercise' => $se], 200);
         }
     }
 }
