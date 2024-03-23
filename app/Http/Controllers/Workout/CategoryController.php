@@ -14,7 +14,7 @@ class CategoryController extends Controller
     public function index()
     {
     $category=Cate::all();
-    return response()->json(['massage'=>'seccand page','exercise'=>$category],200);
+    return response()->json(['message'=>'seccand page','exercise'=>$category],200);
     }
 
 }
