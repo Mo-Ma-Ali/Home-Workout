@@ -11,7 +11,6 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -22,7 +21,10 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-
+    public function coach()
+    {
+     return $this->belongsToMany(coach::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
