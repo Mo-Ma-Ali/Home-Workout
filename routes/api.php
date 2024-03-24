@@ -18,12 +18,15 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//Route::post('challenge',[\App\Http\Controllers\challenge::class,'addchallenge']);
+Route::middleware('auth:sanctum')->group(function (){
+    Route::get('getchallenge/{name}',[\App\Http\Controllers\challenge::class,'Getchallenge']);
+    Route::post('challenge',[\App\Http\Controllers\challenge::class,'addchallenge']);
     Route::post('add',[\App\Http\Controllers\Admin::class,'Add']);
     Route::post('advice',[\App\Http\Controllers\Coach::class,'advice']);
     Route::get('Get/{id}',[\App\Http\Controllers\Coach::class,'getadvice']);
-
 });
+
 Route::get('good/{id}',[\App\Http\Controllers\Coach::class,'good']);
 Route::get('getCoach',[\App\Http\Controllers\Coach::class,'GetCoach']);
 Route::post('register',[\App\Http\Controllers\UserController::class,'register']);
