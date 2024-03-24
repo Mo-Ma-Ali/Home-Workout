@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Exercise;
 use App\Models\WorkoutCompletion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ExerciseController extends Controller
 {
@@ -24,8 +25,8 @@ class ExerciseController extends Controller
         if($exercises->isEmpty())
             return response()->json(['message' => 'third page', 'Categories' => 'not found'], 404);
 
-            $userId = 1;
-            $completedCount = WorkoutCompletion::where('user_id', $userId)->
+            $user_id = Auth::id();
+            $completedCount = WorkoutCompletion::where('user_id', $user_id)->
                                                         where('Level_id',$level_id)->
                                                         where('category_id',$category_id)
                                                         ->count();
@@ -65,5 +66,17 @@ class ExerciseController extends Controller
 
     return response()->json(['message' => 'Exercise created successfully', 'exercise' => $exercise], 201);
 }
+
+public function Search($search)
+    {
+        $se=Exercise::query()->where('name','like','%' .$search.'%' )->get();
+        if ($se=='[]')
+        {
+            return response()->json(['message'=>'Notfound'],404);
+        }
+        else {
+            return response()->json(['Exercise' => $se], 200);
+        }
+    }
 
 }
