@@ -25,6 +25,17 @@ class User extends Authenticatable
     {
      return $this->belongsToMany(coach::class);
     }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
+    public function challenges()
+    {
+        return $this->belongsToMany(Challenge::class)
+        ->withPivot('start_at', 'completed_at', 'done')
+        ->withTimestamps();
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

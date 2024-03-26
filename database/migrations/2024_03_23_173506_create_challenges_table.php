@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('exercise_id')->constrained('exercises');
-            $table->string('Challenge_name');
+            $table->string('Challenge_name')->unique();
             $table->string('Description');
+            $table->integer('end_at');
             $table->timestamps();
         });
     }

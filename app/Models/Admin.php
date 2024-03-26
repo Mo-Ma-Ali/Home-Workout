@@ -8,5 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Model
 {
     use HasFactory;
-    protected $fillable=['name','email','password'];
+    //protected $fillable=['name','email','password'];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
