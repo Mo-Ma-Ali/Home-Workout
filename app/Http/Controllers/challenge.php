@@ -68,7 +68,7 @@ public function enroll($challenge_id)
 
     $challenge = \App\Models\Challenge::findOrFail($challenge_id);
 
-    $user=$challenge->users()->findOrFail($user_id);
+    $user=$challenge->users()->find($user_id);
 
     if(!$user)
     $challenge->users()->attach($user_id);
