@@ -30,6 +30,19 @@ class challenge extends Controller
         return response()->json(['message'=>'challenge create successfuly','challenge'=>$challenge],201);
     }
 
+    public function returnAll()
+    {
+        $user = auth()->id();
+
+        $challenges = \App\Models\Challenge::all();
+        $challenges->load(['users' => function ($query) use ($user) {
+            $query->where('user_id', $user)->withPivot('done');
+        }]);
+
+        return response()->json(['message' => 'Attached user to challenges', 'challenges' => $challenges]);
+    }
+
+
 
 
     public function Getchallenge($name)
@@ -55,6 +68,9 @@ public function enroll($challenge_id)
 
     $challenge = \App\Models\Challenge::findOrFail($challenge_id);
 
+    $user=$challenge->users()->findOrFail($user_id);
+
+    if(!$user)
     $challenge->users()->attach($user_id);
 
     $challenge->users()->updateExistingPivot($user_id, ['start_at' => $startTime]);
@@ -78,6 +94,8 @@ public function endOfChallenge(Request $request, $challenge_id)
 
         if ($completed_at <= $endTime) {
             $challenge->users()->updateExistingPivot($user_id, ['done' => true]);
+            $challenge->users()->updateExistingPivot($user_id, ['completed_at' => $completed_at]);
+
             return response()->json(['message' => 'The challenge completed'], 200);
         } else {
             return response()->json(['message' => 'Failed, Try next time'], 200);

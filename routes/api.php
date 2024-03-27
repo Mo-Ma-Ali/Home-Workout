@@ -25,6 +25,7 @@ Route::post('register',[\App\Http\Controllers\UserController::class,'register'])
 
 Route::middleware('auth:sanctum')->group(function (){
     Route::get('/user',[UserController::class,'getUser']);
+    Route::get('/allchallenges',[challenge::class,'returnAll']);
     Route::get('getchallenge/{name}',[\App\Http\Controllers\challenge::class,'Getchallenge']);
     Route::get('getChallInfo/{challenge_id}',[challenge::class,'getChallInfo']);
     Route::get('/enroll/{challenge_id}',[challenge::class,'enroll']);
