@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cate extends Model
 {
     use HasFactory;
+    protected $fillable=['name','image'];
     public function exercises(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Exercise::class);

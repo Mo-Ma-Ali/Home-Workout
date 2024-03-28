@@ -19,6 +19,7 @@ class UserController extends Controller
             'age'=>$request->age,
             'weight'=>$request->weight,
             'height'=>$request->height,
+            'gender'=>$request->gender,
         ]);
         return response()->json(['data'=>$user],201);
     }
@@ -51,4 +52,13 @@ class UserController extends Controller
        { return response()->json(['admin'=>true,'message'=>$user],200);}
         return response()->json(['message'=>$user],200);
     }
+    public function image(Request $request)
+    {
+        $image=$request->file('image');
+        $imageName = time().'_'.$image->getClientOriginalName();
+       $imagepath= $image->move(public_path('public/uploads'),$imageName);
+       $imagep='public/uploads'.$imageName;
+       return response()->json(['path'=>$imagep]);
+    }
+
 }

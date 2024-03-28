@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('Age');
             $table->string('weight');
             $table->string('height');
+            $table->string('gender');
             $table->timestamps();
         });
     }

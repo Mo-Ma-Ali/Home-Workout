@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('/record',[TestController::class,'getRecord']);
     Route::resource('exercise',ExerciseController::class);
 });
+Route::post('image',[UserController::class,'image']);
 Route::get('addFavorite/{id}',[UserController::class,'Favorite']);
 Route::get('GetFavorite',[UserController::class,'GetFavorite']);
 Route::get('good/{id}',[\App\Http\Controllers\Coach::class,'good']);

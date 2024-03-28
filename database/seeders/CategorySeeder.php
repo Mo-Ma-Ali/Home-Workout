@@ -14,8 +14,8 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
 
-        $data=[['name'=>'Abdominal Exercises'],['name'=>'Chest exercises'],['name'=>'Arm exercises'],
-            ['name'=>'Leg exercises'],['name'=>'Back and shoulder exercises']
+        $data=[['name'=>'Abdominal Exercises','image'=>'public/uploads1711662885_abs.jpg'],['name'=>'Chest exercises','image'=>'public/uploads1711662786_chest.jpg'],['name'=>'Arm exercises','image'=>'public/uploads1711662934_arm.jpg'],
+            ['name'=>'Leg exercises','image'=>'public/uploads1711662982_leg.jpg'],['name'=>'Back and shoulder exercises','image'=>'public/uploads1711663025_shoulder.jpg']
             ];
         DB::table('cates')->insert($data);
         }
