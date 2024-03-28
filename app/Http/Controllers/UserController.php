@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\detail;
+use App\Models\Exercise;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,7 +32,16 @@ class UserController extends Controller
         $token=$user->createToken('authtoken')->plainTextToken;
         return response()->json(['data'=>$user,'token'=>$token]);
     }
-
+    public function GetFavorite()
+    {
+        $get=Exercise::query()->where('Favorite','=',1)->get();
+        return response()->json(['exercises Favorite'=>$get],201);
+    }
+    public function Favorite($id)
+    {
+        $favourite=Exercise::query()->where('id',$id)->update(['Favorite'=>1]);
+        return response()->json(['message'=>'Ok'],201);
+    }
     public function getUser()
     {
         $user=Auth::user();

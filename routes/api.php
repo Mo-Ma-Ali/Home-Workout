@@ -39,11 +39,10 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('/record',[TestController::class,'getRecord']);
     Route::resource('exercise',ExerciseController::class);
 });
-
+Route::get('addFavorite/{id}',[UserController::class,'Favorite']);
+Route::get('GetFavorite',[UserController::class,'GetFavorite']);
 Route::get('good/{id}',[\App\Http\Controllers\Coach::class,'good']);
 Route::get('getCoach',[\App\Http\Controllers\Coach::class,'GetCoach']);
-
-
 Route::get('search/{id}',[ExerciseController::class,'Search']);
 Route::post('add',[\App\Http\Controllers\UserController::class,'Add']);
 Route::resource('level', LevelsController::class);
