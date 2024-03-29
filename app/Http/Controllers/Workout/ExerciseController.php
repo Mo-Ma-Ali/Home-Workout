@@ -66,6 +66,11 @@ class ExerciseController extends Controller
 
     return response()->json(['message' => 'Exercise created successfully', 'exercise' => $exercise], 201);
 }
+public function Getexe()
+{
+    $exe=Exercise::all();
+    return response()->json(['data'=>$exe]);
+}
 
 public function Search($search)
     {
