@@ -21,6 +21,10 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+    public function Favorite()
+    {
+        return $this->hasMany(Favorite::class);
+    }
     public function coach()
     {
      return $this->belongsToMany(coach::class);

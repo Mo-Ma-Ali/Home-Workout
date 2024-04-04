@@ -34,7 +34,8 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::post('add',[\App\Http\Controllers\Admin::class,'Add']);
     Route::post('advice',[\App\Http\Controllers\Coach::class,'advice']);
     Route::get('Get/{id}',[\App\Http\Controllers\Coach::class,'getadvice']);
-
+    Route::post('Favorite',[UserController::class,'Favorite']);
+    Route::get('GetFavorite/{id}',[UserController::class,'GetFavorite']);
     Route::post('/is_done',[TestController::class,'verfiyCategory']);
     Route::get('/record',[TestController::class,'getRecord']);
     Route::resource('exercise',ExerciseController::class);
@@ -42,7 +43,6 @@ Route::middleware('auth:sanctum')->group(function (){
 Route::get('getexe',[ExerciseController::class,'Getexe']);
 Route::post('image',[UserController::class,'image']);
 Route::get('addFavorite/{id}',[UserController::class,'Favorite']);
-Route::get('GetFavorite',[UserController::class,'GetFavorite']);
 Route::get('good/{id}',[\App\Http\Controllers\Coach::class,'good']);
 Route::get('getCoach',[\App\Http\Controllers\Coach::class,'GetCoach']);
 Route::get('search/{id}',[ExerciseController::class,'Search']);

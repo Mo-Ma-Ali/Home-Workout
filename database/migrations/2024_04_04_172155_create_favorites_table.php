@@ -11,14 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('exercises', function (Blueprint $table) {
+        Schema::create('favorites', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('Level_id')->constrained('levels');
-            $table->foreignId('category_id')->constrained('cates');
-            $table->string('name');
-            $table->string('description');
-            $table->integer('date');
-            $table->string('video');
             $table->timestamps();
         });
     }
@@ -28,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exercises');
+        Schema::dropIfExists('favorites');
     }
 };

@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\detail;
 use App\Models\Exercise;
+use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -33,16 +35,6 @@ class UserController extends Controller
         $token=$user->createToken('authtoken')->plainTextToken;
         return response()->json(['data'=>$user,'token'=>$token]);
     }
-    public function GetFavorite()
-    {
-        $get=Exercise::query()->where('Favorite','=',1)->get();
-        return response()->json(['exercises Favorite'=>$get],201);
-    }
-    public function Favorite($id)
-    {
-        $favourite=Exercise::query()->where('id',$id)->update(['Favorite'=>1]);
-        return response()->json(['message'=>'Ok'],201);
-    }
     public function getUser()
     {
         $user=Auth::user();
@@ -59,6 +51,19 @@ class UserController extends Controller
        $imagepath= $image->move(public_path('public/uploads'),$imageName);
        $imagep='public/uploads'.$imageName;
        return response()->json(['path'=>$imagep]);
+    }
+    public function Favorite(Request $request)
+    {
+       $user= DB::table('exersice_favorite_pivot')->insert([
+            'user_id'=>Auth::id(),
+            'exersice_id'=>$request->exersice_id,
+        ]);
+       return response()->json(['data'=>$user],201);
+    }
+    public function GetFavorite($id)
+    {
+        $get=DB::table('exersice_favorite_pivot')->where('user_id',$id)->get();
+        return response()->json(['data'=>$get],201);
     }
 
 }
