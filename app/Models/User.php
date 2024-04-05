@@ -11,6 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -21,6 +22,11 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+
+    public function Details()
+    {
+        return $this->hasOne(detail::class);
+    }
     public function Favorite()
     {
         return $this->hasMany(Favorite::class);

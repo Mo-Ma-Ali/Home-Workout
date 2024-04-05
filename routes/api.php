@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('GetFavorite/{id}',[UserController::class,'GetFavorite']);
     Route::post('/is_done',[TestController::class,'verfiyCategory']);
     Route::get('/record',[TestController::class,'getRecord']);
+    Route::post('add',[\App\Http\Controllers\UserController::class,'Add']);
     Route::resource('exercise',ExerciseController::class);
 });
 Route::get('getexe',[ExerciseController::class,'Getexe']);
@@ -46,7 +47,6 @@ Route::get('addFavorite/{id}',[UserController::class,'Favorite']);
 Route::get('good/{id}',[\App\Http\Controllers\Coach::class,'good']);
 Route::get('getCoach',[\App\Http\Controllers\Coach::class,'GetCoach']);
 Route::get('search/{id}',[ExerciseController::class,'Search']);
-Route::post('add',[\App\Http\Controllers\UserController::class,'Add']);
 Route::resource('level', LevelsController::class);
 Route::resource('categaroy',CategoryController::class);
 

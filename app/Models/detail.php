@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class detail extends Model
 {
-    protected $fillable=['Age','weight','height','gender'];
+    protected $fillable=['age','weight','height','gender','user_id'];
+    public function users()
+    {
+        return $this->belongsTo(User::class);
+    }
     use HasFactory;
 }
