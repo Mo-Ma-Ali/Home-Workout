@@ -16,7 +16,6 @@ class UserController extends Controller
 {
     public function Add(Request $request)
     {
-//        $request->validated();
         $user=detail::query()->create([
             'user_id'=>Auth::id(),
             'age'=>$request->age,
@@ -25,10 +24,6 @@ class UserController extends Controller
             'gender'=>$request->gender,
         ]);
         return response()->json(['data'=>$user],201);
-    }
-    public function progress()
-    {
-
     }
     public function register(Request $request)
     {

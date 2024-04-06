@@ -40,6 +40,8 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('/record',[TestController::class,'getRecord']);
     Route::post('add',[\App\Http\Controllers\UserController::class,'Add']);
     Route::resource('exercise',ExerciseController::class);
+    Route::post('calculate',[\App\Http\Controllers\ProgressController::class,'calculate']);
+    Route::post('TargetWeight',[\App\Http\Controllers\ProgressController::class,'TargetWeight']);
 });
 Route::get('getexe',[ExerciseController::class,'Getexe']);
 Route::post('image',[UserController::class,'image']);

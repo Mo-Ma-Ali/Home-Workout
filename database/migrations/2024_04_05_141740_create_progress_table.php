@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('progress', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->integer('Current_weight')->default(0);
+            $table->integer('age');
+            $table->integer('height');
+            $table->enum('gender',['feminine','man']);
+            $table->integer('Target_weight')->default(0);
+            $table->double('Time_to_reach_the_specified_weight')->default(0);
+            $table->integer('Calories');
             $table->timestamps();
         });
     }

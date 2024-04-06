@@ -22,7 +22,10 @@ class User extends Authenticatable
         'email',
         'password',
     ];
-
+    public function Progress()
+    {
+        return $this->hasMany(Progress::class);
+    }
     public function Details()
     {
         return $this->hasOne(detail::class);
