@@ -44,10 +44,20 @@ Route::middleware('auth:sanctum')->group(function (){
     ///////
     Route::post('challenge',[\App\Http\Controllers\challenge::class,'addchallenge'])->middleware('admin');
     //Route::post('add',[\App\Http\Controllers\Admin::class,'Add']);
+    /////
+    Route::get('getCoach',[\App\Http\Controllers\Coach::class,'GetCoach']);
+    ////
     Route::post('advice',[\App\Http\Controllers\Coach::class,'advice']);
+    ////
     Route::get('Get/{id}',[\App\Http\Controllers\Coach::class,'getadvice']);
+    /////
+    Route::get('experience/{id}/{rating}',[\App\Http\Controllers\Coach::class,'good']);
+    /////
     Route::post('Favorite',[UserController::class,'Favorite']);
-    Route::get('GetFavorite/{id}',[UserController::class,'GetFavorite']);
+    ///////
+    Route::get('GetFavorite',[UserController::class,'GetFavorite']);
+    ///////
+    Route::post('/deleteFav',[UserController::class,'delFavorite']);
     ////////
     Route::post('/is_done',[TestController::class,'verfiyCategory']);
     ///////
@@ -65,12 +75,10 @@ Route::middleware('auth:sanctum')->group(function (){
     ////
     Route::resource('categaroy',CategoryController::class);
 });
-Route::get('getexe',[ExerciseController::class,'Getexe']);
+//Route::get('getexe',[ExerciseController::class,'Getexe']);
 Route::post('image',[UserController::class,'image']);
-Route::get('addFavorite/{id}',[UserController::class,'Favorite']);
-Route::get('good/{id}',[\App\Http\Controllers\Coach::class,'good']);
-Route::get('getCoach',[\App\Http\Controllers\Coach::class,'GetCoach']);
+//Route::get('addFavorite/{id}',[UserController::class,'Favorite']);
 
 
-Route::post('advice',[\App\Http\Controllers\coach::class,'advice']);
+//Route::post('advice',[\App\Http\Controllers\coach::class,'advice']);///////
 

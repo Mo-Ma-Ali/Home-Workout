@@ -71,8 +71,10 @@ class UserController extends Controller
         //dd($user);
         if($user)
        {
-        $token=$user->createToken('authtoken')->plainTextToken;
+        if (Hash::check($request->password, $user->password))
+        {$token=$user->createToken('authtoken')->plainTextToken;
         return response()->json(['message'=>'login ','data'=>['user'=>$user],'token'=>$token]);}
+    else return response()->json (['message'=>'password is incorrecte']);}
     else
     return response()->json(['error' => 'user not found'], 404);
     }
@@ -187,16 +189,28 @@ public function reset(Request $request)
 
     public function Favorite(Request $request)
     {
-       $user= DB::table('exersice_favorite_pivot')->insert([
+       $user= Favorite::create([
             'user_id'=>Auth::id(),
-            'exersice_id'=>$request->exersice_id,
+            'exercise_id'=>$request->exercise_id,
         ]);
        return response()->json(['data'=>$user],201);
     }
-    public function GetFavorite($id)
+
+
+
+    public function GetFavorite(Request $request)
     {
-        $get=DB::table('exersice_favorite_pivot')->where('user_id',$id)->get();
+        $get=Favorite::where('user_id',Auth::id())->get();
         return response()->json(['data'=>$get],201);
     }
 
+
+
+    public function delFavorite(Request $request)
+    {
+        $favorite = Favorite::where('user_id',Auth::id())->where(
+        'exercise_id',$request->exercise_id)->first();
+        $favorite->delete();
+        return response()->json(['message' => 'Favorite exercise deleted successfully'], 200);
+    }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('trainer_id')->constrained('coaches');
             $table->string('message');
-            $table->enum('evaluation',['good','middle','excellent','No rating'])->default('No rating');
+            $table->string('evaluation')->nullable();
             $table->timestamps();
         });
     }
