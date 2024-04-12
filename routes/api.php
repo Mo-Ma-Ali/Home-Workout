@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin;
 use App\Http\Controllers\challenge;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
@@ -24,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('register',[\App\Http\Controllers\UserController::class,'register']);
 Route::post('login',[UserController::class,'login']);
+Route::post('/admin',[Admin::class,'logAdmin']);
 Route::get('logout',[UserController::class,'logout'])->middleware('auth:sanctum');
 Route::post('forgot',[UserController::class,'forgot']);
 Route::post('check_code',[UserController::class,'verfiyReset']);
@@ -41,8 +43,6 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('/enroll/{challenge_id}',[challenge::class,'enroll']);
     ////////
     Route::put('/completed/{challenge_id}',[challenge::class,'endOfChallenge']);
-    ///////
-    Route::post('challenge',[\App\Http\Controllers\challenge::class,'addchallenge'])->middleware('admin');
     //Route::post('add',[\App\Http\Controllers\Admin::class,'Add']);
     /////
     Route::get('getCoach',[\App\Http\Controllers\Coach::class,'GetCoach']);
@@ -77,6 +77,9 @@ Route::middleware('auth:sanctum')->group(function (){
 });
 //Route::get('getexe',[ExerciseController::class,'Getexe']);
 Route::post('image',[UserController::class,'image']);
+///////
+Route::post('challenge',[\App\Http\Controllers\challenge::class,'addchallenge'])->middleware('admin');
+Route::get('adminLogout',[Admin::class,'logout'])->middleware('admin');
 //Route::get('addFavorite/{id}',[UserController::class,'Favorite']);
 
 

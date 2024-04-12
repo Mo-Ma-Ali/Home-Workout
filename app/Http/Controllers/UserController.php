@@ -50,9 +50,9 @@ class UserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
-        if ($request->has('admin')) {
-            $user->admin()->create();
-        }
+        // if ($request->has('admin')) {
+        //     $user->admin()->create();
+        // }
 
         $token=$user->createToken('authtoken')->plainTextToken;
         $user->createCode();
