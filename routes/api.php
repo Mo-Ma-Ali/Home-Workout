@@ -58,6 +58,8 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('GetFavorite',[UserController::class,'GetFavorite']);
     ///////
     Route::post('/deleteFav',[UserController::class,'delFavorite']);
+    ///////
+    Route::post('challenge',[\App\Http\Controllers\challenge::class,'addchallenge'])->middleware('admin');
     ////////
     Route::post('/is_done',[TestController::class,'verfiyCategory']);
     ///////
@@ -65,7 +67,9 @@ Route::middleware('auth:sanctum')->group(function (){
     //////
     Route::post('add',[\App\Http\Controllers\UserController::class,'Add']);
     ///////
-    Route::resource('exercise',ExerciseController::class);
+    Route::get('exercise',[ExerciseController::class,'index']);
+    //////
+    Route::post('exercise',[ExerciseController::class,'store'])->middleware('admin');
     Route::post('calculate',[\App\Http\Controllers\ProgressController::class,'calculate']);
     Route::post('TargetWeight',[\App\Http\Controllers\ProgressController::class,'TargetWeight']);
     ////
@@ -77,8 +81,6 @@ Route::middleware('auth:sanctum')->group(function (){
 });
 //Route::get('getexe',[ExerciseController::class,'Getexe']);
 Route::post('image',[UserController::class,'image']);
-///////
-Route::post('challenge',[\App\Http\Controllers\challenge::class,'addchallenge'])->middleware('admin');
 Route::get('adminLogout',[Admin::class,'logout'])->middleware('admin');
 //Route::get('addFavorite/{id}',[UserController::class,'Favorite']);
 

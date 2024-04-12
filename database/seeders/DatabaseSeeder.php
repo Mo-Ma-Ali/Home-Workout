@@ -26,9 +26,11 @@ class DatabaseSeeder extends Seeder
             coach::class,
             ExerciseSeeder::class,
         ]);
-       \App\Models\Admin::create([
+        $user=\App\Models\User::create([
+            'name' => 'admin',
            'email' => 'admin@gmail.com',
-           'password' => Hash::make('12345678')
+           'password' => Hash::make('12345678'),
        ]);
+       $user->admin()->create();
     }
 }
