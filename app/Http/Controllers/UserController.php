@@ -160,8 +160,6 @@ public function reset(Request $request)
         return response()->json(['message' => 'No reset token found.'], 400);
     }
 }
-
-
     public function getUser()
     {
         $user=Auth::user();
@@ -171,9 +169,6 @@ public function reset(Request $request)
        { return response()->json(['admin'=>true,'message'=>$user],200);}
         return response()->json(['message'=>$user],200);
     }
-
-
-
     public function image(Request $request)
     {
         $image=$request->file('image');
@@ -182,11 +177,6 @@ public function reset(Request $request)
        $imagep='public/uploads'.$imageName;
        return response()->json(['path'=>$imagep]);
     }
-
-
-
-
-
     public function Favorite(Request $request)
     {
        $user= Favorite::create([
@@ -195,17 +185,11 @@ public function reset(Request $request)
         ]);
        return response()->json(['data'=>$user],201);
     }
-
-
-
     public function GetFavorite(Request $request)
     {
         $get=Favorite::where('user_id',Auth::id())->get();
         return response()->json(['data'=>$get],201);
     }
-
-
-
     public function delFavorite(Request $request)
     {
         $favorite = Favorite::where('user_id',Auth::id())->where(

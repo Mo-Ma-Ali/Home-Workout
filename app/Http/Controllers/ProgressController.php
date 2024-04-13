@@ -26,6 +26,11 @@ class ProgressController extends Controller
             ]);
            return response()->json(['message'=>$calcu],201);
     }
+    public function GetDetails(Request $request,$id)
+    {
+        $get=Progress::query()->where('id',$id)->select(['id','user_id','Current_weight','age','height','gender','Calories'])->get();
+        return response()->json(['Details'=>$get],201);
+    }
     public function TargetWeight(Request $request)
     {
         $age=$request->age;
