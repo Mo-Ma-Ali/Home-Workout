@@ -35,7 +35,7 @@ class ProgressController extends Controller
         $Calories= 10*$Current_weight+625*$height-5*$age+5;
         $Target_weight=$request->Target_weight;
         $target=$Calories/3500;
-        $Time=($Current_weight-$Target_weight)/3500;
+        $Time=(($Current_weight-$Target_weight)/3500)*1000;
         $m=DB::table('progress')->update(['Target_weight'=>$Target_weight,'Time_to_reach_the_specified_weight'=>$Time]);
         return response()->json(['You need a number of days to lose 0.45 of your weight'=>$Time]);
     }
