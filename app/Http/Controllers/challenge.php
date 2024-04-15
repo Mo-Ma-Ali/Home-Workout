@@ -4,29 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Models\Challenge as ModelsChallenge;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 use Hamcrest\Description;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Ramsey\Uuid\Type\Integer;
 
 class challenge extends Controller
 {
     public function addchallenge(Request $request)
     {
-        $request->validate([
-            'exercise_ids' => 'required|array',
-            'Challenge_name' => 'required|string',
+        $validator = Validator::make($request->all(), [
+            'exercise_id1' => 'required|integer',
+            'exercise_id2' => 'required|integer',
+            'exercise_id3' => 'required|integer',
+            'Challenge_name' => 'required|string|unique:challenges',
             'Description' => 'required|string',
             'end_at'=>'required|integer'
         ]);
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()], 422);
+        }
         $challenge = \App\Models\challenge::create([
             'Challenge_name' => $request->input('Challenge_name'),
             'Description' => $request->input('Description'),
             'end_at'=> $request->input('end_at'),
         ]);
 
-        $exerciseIds = $request->input('exercise_ids');
-        $challenge->exercises()->attach($exerciseIds);
+        $exerciseIds[0]= $request->input('exercise_id1');
+        $exerciseIds[1]= $request->input('exercise_id2');
+        $exerciseIds[2]= $request->input('exercise_id3');
+        $exerciseIds[3]= $request->input('exercise_id4');
+        $exerciseIds[4]= $request->input('exercise_id5');
+        $exerciseIds[5]= $request->input('exercise_id6');
+        $exerciseIds[6]= $request->input('exercise_id7');
+        $exerciseIds[7]= $request->input('exercise_id8');
+        $exerciseIds[8]= $request->input('exercise_id9');
+        $exerciseIds[9]= $request->input('exercise_id10');
+        for( $i = 0; $i < 10 ; $i++){
+        {if($exerciseIds[$i]!=null)
+        $challenge->exercises()->attach($exerciseIds[$i]);}}
         return response()->json(['message'=>'challenge create successfuly','challenge'=>$challenge],201);
     }
 
