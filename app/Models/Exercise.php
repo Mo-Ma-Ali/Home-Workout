@@ -10,6 +10,10 @@ class Exercise extends Model
 {
     use HasFactory;
     protected $fillable = ['Level_id', 'category_id', 'name', 'description', 'date', 'video'];
+    public function  UserFa()
+    {
+        return $this->belongsToMany(User::class);
+    }
     public function challenges()
     {
         return $this->belongsToMany(Challenge::class);

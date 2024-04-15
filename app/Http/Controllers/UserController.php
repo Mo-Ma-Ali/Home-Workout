@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\detail;
 use App\Models\Exercise;
+use App\Models\exercise_user;
 use App\Models\Favorite;
 use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
@@ -57,7 +58,7 @@ class UserController extends Controller
         $token=$user->createToken('authtoken')->plainTextToken;
         $user->createCode();
 
-        $user->notify(new VerifyEmailNotification());
+       //$user->notify(new VerifyEmailNotification());
         return response()->json(['user' => $user, 'token' => $token], 201);
     }
 
@@ -78,15 +79,11 @@ class UserController extends Controller
     else
     return response()->json(['error' => 'user not found'], 404);
     }
-
-
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
         return response()->json(['message'=>'logout']);
     }
-
-
     public function forgot(Request $request)
 {
     $request->validate([
@@ -108,8 +105,6 @@ class UserController extends Controller
 
     return response()->json(['message' => 'user not found.'], 404);
 }
-
-
 public function verfiyReset(Request $request) {
     $request->validate([
         'email'=>'required|email',
@@ -127,8 +122,6 @@ public function verfiyReset(Request $request) {
     else
     return response()->json(['message'=>'the user not found']);
 }
-
-
 public function reset(Request $request)
 {
     $request->validate([
@@ -179,16 +172,13 @@ public function reset(Request $request)
     }
     public function Favorite(Request $request)
     {
-       $user= Favorite::create([
-            'user_id'=>Auth::id(),
-            'exercise_id'=>$request->exercise_id,
-        ]);
+        $user=DB::table('user_exercise')->insert(['user_id'=>Auth::id(),'exercise_id'=>$request->exersice_id]);
        return response()->json(['data'=>$user],201);
     }
-    public function GetFavorite(Request $request)
+    public function GetFavorite(Request $request,$id)
     {
-        $get=Favorite::where('user_id',Auth::id())->get();
-        return response()->json(['data'=>$get],201);
+        $e=User::find($id);
+        return response()->json(['data'=>$e->Favorite],201);
     }
     public function delFavorite(Request $request)
     {

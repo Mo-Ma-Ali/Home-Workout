@@ -55,7 +55,7 @@ Route::middleware('auth:sanctum')->group(function (){
     /////
     Route::post('Favorite',[UserController::class,'Favorite']);
     ///////
-    Route::get('GetFavorite',[UserController::class,'GetFavorite']);
+    Route::get('GetFavorite/{id}',[UserController::class,'GetFavorite']);
     ///////
     Route::post('/deleteFav',[UserController::class,'delFavorite']);
     ///////
