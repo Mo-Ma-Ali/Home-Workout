@@ -70,20 +70,21 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('exercise',[ExerciseController::class,'index']);
     //////
     Route::post('exercise',[ExerciseController::class,'store'])->middleware('admin');
-    Route::post('calculate',[\App\Http\Controllers\ProgressController::class,'calculate']);
-    Route::post('TargetWeight',[\App\Http\Controllers\ProgressController::class,'TargetWeight']);
     ////
     Route::get('search/{id}',[ExerciseController::class,'Search']);
     ////
     Route::resource('level', LevelsController::class);
     ////
     Route::resource('categaroy',CategoryController::class);
+    ///
+    Route::post('TargetWeight',[\App\Http\Controllers\ProgressController::class,'TargetWeight']);
+    Route::get('GetDetails/{id}',[\App\Http\Controllers\ProgressController::class,'GetDetails']);
+    Route::post('calculate',[\App\Http\Controllers\ProgressController::class,'calculate']);
+
 });
 //Route::get('getexe',[ExerciseController::class,'Getexe']);
 Route::post('image',[UserController::class,'image']);
 Route::get('adminLogout',[Admin::class,'logout'])->middleware('admin');
 //Route::get('addFavorite/{id}',[UserController::class,'Favorite']);
-
-
 //Route::post('advice',[\App\Http\Controllers\coach::class,'advice']);///////
 
