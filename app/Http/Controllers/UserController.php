@@ -172,7 +172,7 @@ public function reset(Request $request)
     }
     public function Favorite(Request $request)
     {
-        $user=DB::table('user_exercise')->insert(['user_id'=>Auth::id(),'exercise_id'=>$request->exersice_id]);
+        $user=DB::table('user_exercise')->insert(['user_id'=>Auth::id(),'exercise_id'=>$request->exercise_id]);
        return response()->json(['data'=>$user],201);
     }
     public function GetFavorite(Request $request,$id)
