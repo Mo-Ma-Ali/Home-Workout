@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Psy\CodeCleaner\ReturnTypePass;
 
 class UserController extends Controller
 {
@@ -160,6 +161,8 @@ public function reset(Request $request)
         return response()->json(['message' => 'No reset token found.'], 400);
     }
 }
+
+
     public function getUser()
     {
         $user=Auth::user();
@@ -169,6 +172,8 @@ public function reset(Request $request)
        { return response()->json(['admin'=>true,'message'=>$user],200);}
         return response()->json(['message'=>$user],200);
     }
+
+
     public function image(Request $request)
     {
         $image=$request->file('image');
@@ -177,6 +182,8 @@ public function reset(Request $request)
        $imagep='public/uploads'.$imageName;
        return response()->json(['path'=>$imagep]);
     }
+
+
     public function Favorite(Request $request)
     {
        $user= Favorite::create([
@@ -185,15 +192,24 @@ public function reset(Request $request)
         ]);
        return response()->json(['data'=>$user],201);
     }
-    public function GetFavorite(Request $request)
+
+
+    public function GetFavorite(Request $request , $id)
     {
-        $get=Favorite::where('user_id',Auth::id())->get();
+        $get=Favorite::where('user_id',Auth::id())
+        ->where('id',$id)->get();
+        if($get=='[]')
+        return response()->json(['message'=>'not found'],404);
         return response()->json(['data'=>$get],201);
     }
-    public function delFavorite(Request $request)
+
+
+    public function delFavorite($id)
     {
         $favorite = Favorite::where('user_id',Auth::id())->where(
-        'exercise_id',$request->exercise_id)->first();
+        'id',$id)->first();
+        if ($favorite==null)
+        return response()->json(['message'=>'not found'],404);
         $favorite->delete();
         return response()->json(['message' => 'Favorite exercise deleted successfully'], 200);
     }

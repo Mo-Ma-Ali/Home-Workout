@@ -36,12 +36,17 @@ class User extends Authenticatable
     }
     public function coach()
     {
-     return $this->belongsToMany(coach::class);
+     return $this->hasOne(Coach::class);
     }
 
     public function admin()
     {
         return $this->hasOne(Admin::class);
+    }
+
+    public function advices()
+    {
+        return $this->hasMany(Advice::class);
     }
     public function challenges()
     {

@@ -47,7 +47,7 @@ Route::middleware('auth:sanctum')->group(function (){
     /////
     Route::get('getCoach',[\App\Http\Controllers\Coach::class,'GetCoach']);
     ////
-    Route::post('advice',[\App\Http\Controllers\Coach::class,'advice']);
+    Route::post('advice',[\App\Http\Controllers\Coach::class,'advice'])->middleware('couch');
     ////
     Route::get('Get/{id}',[\App\Http\Controllers\Coach::class,'getadvice']);
     /////
@@ -55,9 +55,9 @@ Route::middleware('auth:sanctum')->group(function (){
     /////
     Route::post('Favorite',[UserController::class,'Favorite']);
     ///////
-    Route::get('GetFavorite',[UserController::class,'GetFavorite']);
+    Route::get('GetFavorite/{id}',[UserController::class,'GetFavorite']);
     ///////
-    Route::post('/deleteFav',[UserController::class,'delFavorite']);
+    Route::get('/deleteFav/{id}',[UserController::class,'delFavorite']);
     ///////
     Route::post('challenge',[\App\Http\Controllers\challenge::class,'addchallenge'])->middleware('admin');
     ////////
