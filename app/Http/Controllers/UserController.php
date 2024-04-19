@@ -207,6 +207,7 @@ public function reset(Request $request)
     }
 
 
+
     public function AllFavorit()
     {
         $favorites = Favorite::where('user_id', Auth::id())->get();
