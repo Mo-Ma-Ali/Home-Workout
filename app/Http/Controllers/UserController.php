@@ -204,7 +204,14 @@ class UserController extends Controller
         $exercise = Exercise::where('id', $getExercise->exercise_id)->get();
         return response()->json(['data' => $get, 'exercise' => $exercise], 200);
     }
-
+      public function Favorite(Request $request)
+  {
+       $user= Favorite::create([
+           'user_id'=>Auth::id(),
+           'exercise_id'=>$request->exercise_id,
+       ]);
+       return response()->json(['data'=>$user],201);
+   }
     public function AllFavorit()
     {
         $favorites = Favorite::where('user_id', Auth::id())->get();
