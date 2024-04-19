@@ -7,9 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coach extends Model
 {
+    use HasFactory;
     public function Advice()
     {
         return $this->hasMany(Advice::class);
     }
-    use HasFactory;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

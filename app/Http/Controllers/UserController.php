@@ -7,6 +7,7 @@ use App\Models\detail;
 use App\Models\Exercise;
 use App\Models\exercise_user;
 use App\Models\Favorite;
+use App\Models\Plan;
 use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailNotification;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Psy\CodeCleaner\ReturnTypePass;
 
 class UserController extends Controller
 {
@@ -153,6 +155,8 @@ public function reset(Request $request)
         return response()->json(['message' => 'No reset token found.'], 400);
     }
 }
+
+
     public function getUser()
     {
         $user=Auth::user();
@@ -162,6 +166,8 @@ public function reset(Request $request)
        { return response()->json(['admin'=>true,'message'=>$user],200);}
         return response()->json(['message'=>$user],200);
     }
+
+
     public function image(Request $request)
     {
         $image=$request->file('image');
@@ -170,20 +176,55 @@ public function reset(Request $request)
        $imagep='public/uploads'.$imageName;
        return response()->json(['path'=>$imagep]);
     }
+
+
     public function Favorite(Request $request)
     {
         $user=DB::table('user_exercise')->insert(['user_id'=>Auth::id(),'exercise_id'=>$request->exercise_id]);
        return response()->json(['data'=>$user],201);
     }
+    public function GetWeek()
+    {
+        $data=Plan::all();
+        return response()->json(['data'=>$data],201);
+    }
+    public function PlanForUser($id)
+    {
+        $plan=Plan::find($id);
+        return response()->json(['data'=>$plan->exercise],201);
+    }
+//    public function Favorite(Request $request)
+//    {
+//        $user= Favorite::create([
+//            'user_id'=>Auth::id(),
+//            'exercise_id'=>$request->exercise_id,
+//        ]);
+//        return response()->json(['data'=>$user],201);
+//    }
+
     public function GetFavorite(Request $request,$id)
     {
-        $e=User::find($id);
-        return response()->json(['data'=>$e->Favorite],201);
+        $e = User::find($id);
+        return response()->json(['data' => $e->Favorite], 201);
     }
-    public function delFavorite(Request $request)
+
+
+//    public function GetFavorite(Request $request , $id)
+//    {
+//        $get=Favorite::where('user_id',Auth::id())
+//        ->where('id',$id)->get();
+//        if($get=='[]')
+//        return response()->json(['message'=>'not found'],404);
+//        return response()->json(['data'=>$get],201);
+//    }
+
+
+    public function delFavorite($id)
     {
         $favorite = Favorite::where('user_id',Auth::id())->where(
-        'exercise_id',$request->exercise_id)->first();
+        'id',$id)->first();
+        if ($favorite==null)
+        return response()->json(['message'=>'not found'],404);
         $favorite->delete();
         return response()->json(['message' => 'Favorite exercise deleted successfully'], 200);
     }

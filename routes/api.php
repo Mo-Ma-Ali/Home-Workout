@@ -47,7 +47,7 @@ Route::middleware('auth:sanctum')->group(function (){
     /////
     Route::get('getCoach',[\App\Http\Controllers\Coach::class,'GetCoach']);
     ////
-    Route::post('advice',[\App\Http\Controllers\Coach::class,'advice']);
+    Route::post('advice',[\App\Http\Controllers\Coach::class,'advice'])->middleware('couch');
     ////
     Route::get('Get/{id}',[\App\Http\Controllers\Coach::class,'getadvice']);
     /////
@@ -57,7 +57,7 @@ Route::middleware('auth:sanctum')->group(function (){
     ///////
     Route::get('GetFavorite/{id}',[UserController::class,'GetFavorite']);
     ///////
-    Route::post('/deleteFav',[UserController::class,'delFavorite']);
+    Route::get('/deleteFav/{id}',[UserController::class,'delFavorite']);
     ///////
     Route::post('challenge',[\App\Http\Controllers\challenge::class,'addchallenge'])->middleware('admin');
     ////////
@@ -80,7 +80,9 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::post('TargetWeight',[\App\Http\Controllers\ProgressController::class,'TargetWeight']);
     Route::get('GetDetails/{id}',[\App\Http\Controllers\ProgressController::class,'GetDetails']);
     Route::post('calculate',[\App\Http\Controllers\ProgressController::class,'calculate']);
-
+    Route::get('Plan/{id}',[UserController::class,'GetPlan']);
+    Route::get('GetWeek',[UserController::class,'GetWeek']);
+    Route::get('PlanForUser/{id}',[UserController::class,'PlanForUser']);
 });
 //Route::get('getexe',[ExerciseController::class,'Getexe']);
 Route::post('image',[UserController::class,'image']);

@@ -3,31 +3,46 @@
 namespace App\Http\Controllers;
 
 use App\Models\Advice;
+use App\Models\User;
 use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class Coach extends Controller
 {
     public function GetCoach()
     {
         $data=\App\Models\Coach::all();
+
+        $phones = [];
+        foreach($data as $coach)
+        {
+            $user = User::find($coach->user_id);
+            if ($user) {
+                $phones[$coach->id] = $user;
+            }        }
+        //dd($phone);
         if (!$data)
         {
             return response()->json(['message'=>'Notfound']);
         }else{
-            return response()->json(['coach'=>$data],201);
+            return response()->json(['coach'=>$phones],201);
         }
 
     }
     public function advice(Request $request)
     {
+        $couch = Auth::user();
+        if($couch)
+       {
         if (!Advice::where('trainer_id', $request->trainer_id)->exists()) {
             $advice = Advice::create([
+                'couch_id' => $couch->id,
                 'message' => $request->message,
                 'trainer_id' => $request->trainer_id,
             ]);
             return response()->json(['advice' => $advice], 201);
-        }
+        }}
         return response()->json(['message' => 'Advice for this trainer already exists'], 409);
     }
 
