@@ -187,6 +187,11 @@ public function reset(Request $request)
         $plan=Plan::find($id);
         return response()->json(['data'=>$plan->exercise],201);
     }
+    public function UpdatePlane(Request $request,$id)
+    {
+        $data=DB::table('plan_exercise')->where('id',$id)->update(['plan_id'=>$request->plan_id,'exercise_id'=>$request->exercise_id]);
+        return response()->json('Plane Update Successfuly');
+    }
     public function GetFavorite(Request $request , $id)
     {
         $get=Favorite::where('user_id',Auth::id())
@@ -207,7 +212,6 @@ public function reset(Request $request)
         $favorite->delete();
         return response()->json(['message' => 'Favorite exercise deleted successfully'], 200);
     }
-
 
 //    public function GetFavorite(Request $request,$id)
 //    {

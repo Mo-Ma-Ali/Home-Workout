@@ -83,6 +83,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('Plan/{id}',[UserController::class,'GetPlan']);
     Route::get('GetWeek',[UserController::class,'GetWeek']);
     Route::get('PlanForUser/{id}',[UserController::class,'PlanForUser']);
+    Route::post('UpdatePlane/{id}',[UserController::class,'UpdatePlane']);
 });
 //Route::get('getexe',[ExerciseController::class,'Getexe']);
 Route::post('image',[UserController::class,'image']);
