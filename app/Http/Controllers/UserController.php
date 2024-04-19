@@ -200,7 +200,10 @@ public function reset(Request $request)
         ->where('id',$id)->get();
         if($get=='[]')
         return response()->json(['message'=>'not found'],404);
-        return response()->json(['data'=>$get],201);
+        $getExercise=Favorite::where('user_id',Auth::id())
+        ->where('id',$id)->first();
+        $exercise = Exercise::where('id',$getExercise->exercise_id)->get();
+        return response()->json(['data'=>$get,'exercise'=>$exercise],200);
     }
 
 
