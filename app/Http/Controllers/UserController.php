@@ -175,12 +175,6 @@ class UserController extends Controller
         return response()->json(['path' => $imagep]);
     }
 
-    public function Favorite(Request $request)
-    {
-        $user = DB::table('user_exercise')->insert(['user_id' => Auth::id(), 'exercise_id' => $request->exercise_id]);
-        return response()->json(['data' => $user], 201);
-    }
-
     public function GetWeek()
     {
         $data = Plan::all();
@@ -210,4 +204,33 @@ class UserController extends Controller
         $exercise = Exercise::where('id', $getExercise->exercise_id)->get();
         return response()->json(['data' => $get, 'exercise' => $exercise], 200);
     }
+
+    public function AllFavorit()
+    {
+        $favorites = Favorite::where('user_id', Auth::id())->get();
+        if ($favorites == '[]')
+            return response()->json(['message' => 'not found'], 404);
+        $favoriteids = $favorites
+            ->pluck('exercise_id')
+            ->toArray();
+
+        $favoriteNames = Exercise::whereIn('id', $favoriteids)->get();
+        $exerciseNames = $favoriteNames->
+        pluck('name')
+            ->toArray();
+
+        return response()->json(['message' => 'success', 'favorites' => $exerciseNames], 200);
+
+    }
+
+    public function delFavorite($id)
+    {
+        $favorite = Favorite::where('user_id', Auth::id())->where(
+            'id', $id)->first();
+        if ($favorite == null)
+            return response()->json(['message' => 'not found'], 404);
+        $favorite->delete();
+        return response()->json(['message' => 'Favorite exercise deleted successfully'], 200);
+    }
 }
+
