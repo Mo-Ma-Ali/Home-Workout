@@ -54,6 +54,9 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('experience/{id}/{rating}',[\App\Http\Controllers\Coach::class,'good']);
     /////
     Route::post('Favorite',[UserController::class,'Favorite']);
+
+    Route::get('AllFavorite',[UserController::class,'AllFavorit']);
+
     ///////
     Route::get('GetFavorite/{id}',[UserController::class,'GetFavorite']);
     ///////

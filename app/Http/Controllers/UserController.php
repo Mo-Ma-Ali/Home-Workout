@@ -207,6 +207,25 @@ public function reset(Request $request)
     }
 
 
+    public function AllFavorit()
+    {
+        $favorites = Favorite::where('user_id', Auth::id())->get();
+        if($favorites=='[]')
+        return response()->json(['message'=>'not found'],404);
+        $favoriteids = $favorites
+        ->pluck('exercise_id')
+        ->toArray();
+
+        $favoriteNames = Exercise::whereIn('id', $favoriteids)->get();
+        $exerciseNames = $favoriteNames->
+        pluck('name')
+        ->toArray();
+
+        return response()->json(['message'=>'success','favorites' => $exerciseNames],200);
+
+    }
+
+
     public function delFavorite($id)
     {
         $favorite = Favorite::where('user_id',Auth::id())->where(
