@@ -76,7 +76,7 @@ class challenge extends Controller
 
     $pivotData = $challenge->exercises()->withPivot('challenge_id', 'exercise_id')->get();
 
-    return response()->json(['challenge' => $challenge, 'exercises' => $pivotData]);
+    return response()->json(['message' => 'success','challenge' => $challenge, 'exercises' => $pivotData]);
 }
 
 public function enroll($challenge_id)

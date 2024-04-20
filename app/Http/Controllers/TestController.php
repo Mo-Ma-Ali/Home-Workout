@@ -42,7 +42,7 @@ return response()->json(['message' => 'Workout verification recorded successfull
    {
     $user=Auth::id();
     $record=WorkoutCompletion::where('user_id',$user)->get();
-    return response()->json(['message'=>$record]);
+    return response()->json(['message' => 'completed category','data'=>$record]);
    }
 
 

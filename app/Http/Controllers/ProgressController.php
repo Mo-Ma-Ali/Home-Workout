@@ -24,12 +24,12 @@ class ProgressController extends Controller
             'height'=>$height,
             'Calories'=>$Calories,
             ]);
-           return response()->json(['message'=>$calcu],201);
+           return response()->json(['message' => 'success' ,'data'=>$calcu],201);
     }
     public function GetDetails(Request $request,$id)
     {
         $get=Progress::query()->where('id',$id)->select(['id','user_id','Current_weight','age','height','gender','Calories'])->get();
-        return response()->json(['Details'=>$get],201);
+        return response()->json(['message' => 'success','Details'=>$get],201);
     }
     public function TargetWeight(Request $request)
     {
@@ -42,6 +42,6 @@ class ProgressController extends Controller
         $target=$Calories/3500;
         $Time=(($Current_weight-$Target_weight)/3500)*1000;
         $m=DB::table('progress')->update(['Target_weight'=>$Target_weight,'Time_to_reach_the_specified_weight'=>$Time]);
-        return response()->json(['You need a number of days to lose 0.45 of your weight'=>$Time]);
+        return response()->json(['message' => 'success','You need a number of days to lose 0.45 of your weight'=>$Time]);
     }
 }

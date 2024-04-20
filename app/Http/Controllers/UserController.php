@@ -59,7 +59,7 @@ class UserController extends Controller
         $user->createCode();
 
         $user->notify(new VerifyEmailNotification());
-        return response()->json(['user' => $user, 'token' => $token], 201);
+        return response()->json(['message' => 'success','user' => $user, 'token' => $token], 201);
     }
 
 
@@ -190,7 +190,7 @@ public function reset(Request $request)
             'user_id'=>Auth::id(),
             'exercise_id'=>$request->exercise_id,
         ]);
-       return response()->json(['data'=>$user],201);
+       return response()->json(['message' => 'success','data'=>$user],201);
     }
 
 
@@ -232,7 +232,7 @@ public function reset(Request $request)
         $favorite = Favorite::where('user_id',Auth::id())->where(
         'id',$id)->first();
         if ($favorite==null)
-        return response()->json(['message'=>'not found'],404);
+        return response()->json(['message'=>'not found'],200);
         $favorite->delete();
         return response()->json(['message' => 'Favorite exercise deleted successfully'], 200);
     }
