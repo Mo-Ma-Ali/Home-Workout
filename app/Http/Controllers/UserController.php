@@ -237,7 +237,7 @@ class UserController extends Controller
     {
         $favorites = Favorite::where('user_id', Auth::id())->get();
         if ($favorites == '[]')
-            return response()->json(['message' => 'not found'], 404);
+            return response()->json(['message' => 'not found'], 200);
         $favoriteids = $favorites
             ->pluck('exercise_id')
             ->toArray();
