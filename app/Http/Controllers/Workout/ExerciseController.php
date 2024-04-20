@@ -80,7 +80,7 @@ public function Search($search)
             return response()->json(['message'=>'Notfound'],404);
         }
         else {
-            return response()->json(['Exercise' => $se], 200);
+            return response()->json(['message'=> 'success','Exercise' => $se], 200);
         }
     }
 

@@ -26,7 +26,7 @@ class Coach extends Controller
         {
             return response()->json(['message'=>'Notfound']);
         }else{
-            return response()->json(['coach'=>$phones],201);
+            return response()->json(['message' => 'success','coach'=>$phones],201);
         }
 
     }
@@ -41,7 +41,7 @@ class Coach extends Controller
                 'message' => $request->message,
                 'trainer_id' => $request->trainer_id,
             ]);
-            return response()->json(['advice' => $advice], 201);
+            return response()->json(['message' => 'success','advice' => $advice], 201);
         }}
         return response()->json(['message' => 'Advice for this trainer already exists'], 409);
     }
@@ -49,7 +49,7 @@ class Coach extends Controller
     public function getadvice($id)
     {
         $user=Advice::query()->where('trainer_id',$id)->get();
-        return response()->json(['data'=>$user]);
+        return response()->json(['message' => 'success','data'=>$user]);
     }
 
 
@@ -67,7 +67,7 @@ class Coach extends Controller
         "Thank you for your positive feedback. We're glad you enjoyed it!",
         "Fantastic! We're thrilled to hear that you had an excellent experience!"
         ];
-        return response()->json(['rate'=>$array[$rating],'messsage'=>$massege[$rating]]);
+        return response()->json(['message' => 'success','rate'=>$array[$rating],'messsage'=>$massege[$rating]]);
     }
     return response()->json(['message'=>'WTF??']);
     }

@@ -59,8 +59,8 @@ class UserController extends Controller
         $token = $user->createToken('authtoken')->plainTextToken;
         $user->createCode();
 
-        //$user->notify(new VerifyEmailNotification());
-        return response()->json(['user' => $user, 'token' => $token], 201);
+        $user->notify(new VerifyEmailNotification());
+        return response()->json(['message' => 'success','user' => $user, 'token' => $token], 201);
     }
     public function login(Request $request)
     {
@@ -212,11 +212,27 @@ class UserController extends Controller
     public function Favorite(Request $request)
   {
        $user= Favorite::create([
-           'user_id'=>Auth::id(),
-           'exercise_id'=>$request->exercise_id,
-       ]);
-       return response()->json(['data'=>$user],201);
-   }
+            'user_id'=>Auth::id(),
+            'exercise_id'=>$request->exercise_id,
+        ]);
+       return response()->json(['message' => 'success','data'=>$user],201);
+    }
+
+
+    // public function GetFavorite(Request $request , $id)
+    // {
+    //     $get=Favorite::where('user_id',Auth::id())
+    //     ->where('id',$id)->get();
+    //     if($get=='[]')
+    //     return response()->json(['message'=>'not found'],404);
+    //     $getExercise=Favorite::where('user_id',Auth::id())
+    //     ->where('id',$id)->first();
+    //     $exercise = Exercise::where('id',$getExercise->exercise_id)->get();
+    //     return response()->json(['data'=>$get,'exercise'=>$exercise],200);
+    // }
+
+
+
     public function AllFavorit()
     {
         $favorites = Favorite::where('user_id', Auth::id())->get();
@@ -236,10 +252,10 @@ class UserController extends Controller
     }
     public function delFavorite($id)
     {
-        $favorite = Favorite::where('user_id', Auth::id())->where(
-            'id', $id)->first();
-        if ($favorite == null)
-            return response()->json(['message' => 'not found'], 404);
+        $favorite = Favorite::where('user_id',Auth::id())->where(
+        'id',$id)->first();
+        if ($favorite==null)
+        return response()->json(['message'=>'not found'],200);
         $favorite->delete();
         return response()->json(['message' => 'Favorite exercise deleted successfully'], 200);
     }
