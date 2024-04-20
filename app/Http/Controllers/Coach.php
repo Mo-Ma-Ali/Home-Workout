@@ -48,7 +48,7 @@ class Coach extends Controller
 
     public function getadvice($id)
     {
-        $user=Advice::query()->where('trainer_id',$id)->get();
+        $user=Advice::query()->where('couch_id',$id)->get();
         return response()->json(['message' => 'success','data'=>$user]);
     }
 
