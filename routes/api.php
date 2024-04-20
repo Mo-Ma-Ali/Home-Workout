@@ -87,6 +87,9 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('GetWeek',[UserController::class,'GetWeek']);
     Route::get('PlanForUser/{id}',[UserController::class,'PlanForUser']);
     Route::post('UpdatePlane/{id}',[UserController::class,'UpdatePlane']);
+    Route::get('GetWeightLossExercises',[UserController::class,'GetWeightLossExercise']);
+    Route::get('PlanForWeightLoss/{id}',[UserController::class,'PlanforWeightLoss']);
+    Route::post('UpdatePlaneForWeightLoss/{id}',[UserController::class,'UpdatePlaneForWeightLoss']);
 });
 //Route::get('getexe',[ExerciseController::class,'Getexe']);
 Route::post('image',[UserController::class,'image']);

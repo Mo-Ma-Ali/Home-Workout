@@ -7,8 +7,10 @@ use App\Models\detail;
 use App\Models\Exercise;
 use App\Models\exercise_user;
 use App\Models\Favorite;
+use App\Models\Loss;
 use App\Models\Plan;
 use App\Models\User;
+use App\Models\WeightLoss;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailNotification;
 use Carbon\Carbon;
@@ -21,6 +23,7 @@ use Psy\CodeCleaner\ReturnTypePass;
 
 class UserController extends Controller
 {
+
     public function Add(Request $request)
     {
         $user = detail::query()->create([
@@ -32,8 +35,6 @@ class UserController extends Controller
         ]);
         return response()->json(['data' => $user], 201);
     }
-
-
     public function register(Request $request)
     {
 
@@ -61,8 +62,6 @@ class UserController extends Controller
         //$user->notify(new VerifyEmailNotification());
         return response()->json(['user' => $user, 'token' => $token], 201);
     }
-
-
     public function login(Request $request)
     {
         $request->validate([
@@ -79,13 +78,11 @@ class UserController extends Controller
         } else
             return response()->json(['error' => 'user not found'], 404);
     }
-
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
         return response()->json(['message' => 'logout']);
     }
-
     public function forgot(Request $request)
     {
         $request->validate([
@@ -107,7 +104,6 @@ class UserController extends Controller
 
         return response()->json(['message' => 'user not found.'], 404);
     }
-
     public function verfiyReset(Request $request)
     {
         $request->validate([
@@ -122,7 +118,6 @@ class UserController extends Controller
         } else
             return response()->json(['message' => 'the user not found']);
     }
-
     public function reset(Request $request)
     {
         $request->validate([
@@ -154,7 +149,6 @@ class UserController extends Controller
             return response()->json(['message' => 'No reset token found.'], 400);
         }
     }
-
     public function getUser()
     {
         $user = Auth::user();
@@ -165,7 +159,6 @@ class UserController extends Controller
         }
         return response()->json(['message' => $user], 200);
     }
-
     public function image(Request $request)
     {
         $image = $request->file('image');
@@ -174,25 +167,37 @@ class UserController extends Controller
         $imagep = 'public/uploads' . $imageName;
         return response()->json(['path' => $imagep]);
     }
-
     public function GetWeek()
     {
         $data = Plan::all();
         return response()->json(['data' => $data], 201);
     }
-
     public function PlanForUser($id)
     {
         $plan = Plan::find($id);
         return response()->json(['data' => $plan->exercise], 201);
     }
-
     public function UpdatePlane(Request $request, $id)
     {
         $data = DB::table('plan_exercise')->where('id', $id)->update(['plan_id' => $request->plan_id, 'exercise_id' => $request->exercise_id]);
         return response()->json('Plane Update Successfuly');
     }
+    public function GetWeightLossExercise()
+    {
+        $data=Loss::all();
+        return response()->json(['data'=>$data],201);
+    }
+    public function PlanforWeightLoss($id)
+    {
+        $plan=Plan::find($id);
+        return response()->json(['data'=>$plan->Loss]);
+    }
+    public function UpdatePlaneForWeightLoss(Request $request,$id)
+    {
+        $data=DB::table('plan_loss')->where('id',$id)->update(['plan_id'=>$request->plan_id,'Loss_id'=>$request->Loss_id]);
 
+        return response()->json(['Plane Update Successfully'],201);
+    }
     public function GetFavorite(Request $request, $id)
     {
         $get = Favorite::where('user_id', Auth::id())
@@ -204,7 +209,7 @@ class UserController extends Controller
         $exercise = Exercise::where('id', $getExercise->exercise_id)->get();
         return response()->json(['data' => $get, 'exercise' => $exercise], 200);
     }
-      public function Favorite(Request $request)
+    public function Favorite(Request $request)
   {
        $user= Favorite::create([
            'user_id'=>Auth::id(),
@@ -229,7 +234,6 @@ class UserController extends Controller
         return response()->json(['message' => 'success', 'favorites' => $exerciseNames], 200);
 
     }
-
     public function delFavorite($id)
     {
         $favorite = Favorite::where('user_id', Auth::id())->where(
