@@ -43,7 +43,7 @@ class Coach extends Controller
             ]);
             return response()->json(['message' => 'success','advice' => $advice], 201);
         }}
-        return response()->json(['message' => 'Advice for this trainer already exists'], 409);
+        return response()->json(['message' => 'Advice for this trainer already exists'], 201);
     }
 
     public function getadvice($id)
