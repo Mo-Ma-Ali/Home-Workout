@@ -83,7 +83,10 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::post('TargetWeight',[\App\Http\Controllers\ProgressController::class,'TargetWeight']);
     Route::get('GetDetails/{id}',[\App\Http\Controllers\ProgressController::class,'GetDetails']);
     Route::post('calculate',[\App\Http\Controllers\ProgressController::class,'calculate']);
-
+    Route::get('Plan/{id}',[UserController::class,'GetPlan']);
+    Route::get('GetWeek',[UserController::class,'GetWeek']);
+    Route::get('PlanForUser/{id}',[UserController::class,'PlanForUser']);
+    Route::post('UpdatePlane/{id}',[UserController::class,'UpdatePlane']);
 });
 //Route::get('getexe',[ExerciseController::class,'Getexe']);
 Route::post('image',[UserController::class,'image']);

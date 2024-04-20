@@ -14,4 +14,5 @@ class Favorite extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
 }

@@ -32,7 +32,7 @@ class User extends Authenticatable
     }
     public function Favorite()
     {
-        return $this->hasMany(Favorite::class);
+        return $this->belongsToMany(Exercise::class,'user_exercise');
     }
     public function coach()
     {

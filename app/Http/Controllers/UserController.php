@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Admin;
 use App\Models\detail;
 use App\Models\Exercise;
+use App\Models\exercise_user;
 use App\Models\Favorite;
+use App\Models\Plan;
 use App\Models\User;
 use App\Notifications\ResetPasswordNotification;
 use App\Notifications\VerifyEmailNotification;
@@ -21,17 +23,15 @@ class UserController extends Controller
 {
     public function Add(Request $request)
     {
-        $user=detail::query()->create([
-            'user_id'=>Auth::id(),
-            'age'=>$request->age,
-            'weight'=>$request->weight,
-            'height'=>$request->height,
-            'gender'=>$request->gender,
+        $user = detail::query()->create([
+            'user_id' => Auth::id(),
+            'age' => $request->age,
+            'weight' => $request->weight,
+            'height' => $request->height,
+            'gender' => $request->gender,
         ]);
-        return response()->json(['data'=>$user],201);
+        return response()->json(['data' => $user], 201);
     }
-
-
 
 
     public function register(Request $request)
@@ -55,7 +55,7 @@ class UserController extends Controller
         //     $user->admin()->create();
         // }
 
-        $token=$user->createToken('authtoken')->plainTextToken;
+        $token = $user->createToken('authtoken')->plainTextToken;
         $user->createCode();
 
         $user->notify(new VerifyEmailNotification());
@@ -63,129 +63,149 @@ class UserController extends Controller
     }
 
 
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
         $user = User::where('email', $request->email)->first();
         //dd($user);
-        if($user)
-       {
-        if (Hash::check($request->password, $user->password))
-        {$token=$user->createToken('authtoken')->plainTextToken;
-        return response()->json(['message'=>'login ','data'=>['user'=>$user],'token'=>$token]);}
-    else return response()->json (['message'=>'password is incorrecte']);}
-    else
-    return response()->json(['error' => 'user not found'], 404);
+        if ($user) {
+            if (Hash::check($request->password, $user->password)) {
+                $token = $user->createToken('authtoken')->plainTextToken;
+                return response()->json(['message' => 'login ', 'data' => ['user' => $user], 'token' => $token]);
+            } else return response()->json(['message' => 'password is incorrecte']);
+        } else
+            return response()->json(['error' => 'user not found'], 404);
     }
-
 
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
-        return response()->json(['message'=>'logout']);
+        return response()->json(['message' => 'logout']);
     }
-
 
     public function forgot(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email'
-    ]);
-
-    $user = User::where('email', $request->email)->first();
-    if ($user) {
-        $token = rand(1000,9999);
-        DB::table('password_reset_tokens')->insert([
-            'email' => $request->email,
-            'token' => $token,
-            'created_at' => Carbon::now()
-        ]);
-        $user->notify(new ResetPasswordNotification($token));
-
-        return response()->json(['message' => 'password reset code sent successfully.'], 200);
-    }
-
-    return response()->json(['message' => 'user not found.'], 404);
-}
-
-
-public function verfiyReset(Request $request) {
-    $request->validate([
-        'email'=>'required|email',
-        'code'=>'required'
-    ]);
-    $token=DB::table('password_reset_tokens')->where('email',$request->email)->first();
-    if($token)
     {
-        if($request->code===$token->token)
-        {
-            return response()->json(['message'=>'the code is correct']);
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+        if ($user) {
+            $token = rand(1000, 9999);
+            DB::table('password_reset_tokens')->insert([
+                'email' => $request->email,
+                'token' => $token,
+                'created_at' => Carbon::now()
+            ]);
+            $user->notify(new ResetPasswordNotification($token));
+
+            return response()->json(['message' => 'password reset code sent successfully.'], 200);
         }
-        else return response()->json(['message'=>'the code is incorrect']);
+
+        return response()->json(['message' => 'user not found.'], 404);
     }
-    else
-    return response()->json(['message'=>'the user not found']);
-}
 
+    public function verfiyReset(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'code' => 'required'
+        ]);
+        $token = DB::table('password_reset_tokens')->where('email', $request->email)->first();
+        if ($token) {
+            if ($request->code === $token->token) {
+                return response()->json(['message' => 'the code is correct']);
+            } else return response()->json(['message' => 'the code is incorrect']);
+        } else
+            return response()->json(['message' => 'the user not found']);
+    }
 
-public function reset(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'code' => 'required',
-        'password' => 'required|min:8',
-    ]);
+    public function reset(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'code' => 'required',
+            'password' => 'required|min:8',
+        ]);
 
-    $tokenData = DB::table('password_reset_tokens')
+        $tokenData = DB::table('password_reset_tokens')
+            ->where('email', $request->email)
+            ->first();
+
+        if ($tokenData) {
+
+            if ($request->code == $tokenData->token) {
+                $user = User::where('email', $request->email)->first();
+                $user->password = bcrypt($request->password);
+                $user->save();
+
+                DB::table('password_reset_tokens')
                     ->where('email', $request->email)
-                    ->first();
+                    ->delete();
 
-    if ($tokenData) {
-
-        if ($request->code == $tokenData->token) {
-            $user = User::where('email', $request->email)->first();
-            $user->password = bcrypt($request->password);
-            $user->save();
-
-            DB::table('password_reset_tokens')
-                ->where('email', $request->email)
-                ->delete();
-
-            return response()->json(['message' => 'password reset successfully.'], 200);
+                return response()->json(['message' => 'password reset successfully.'], 200);
+            } else {
+                return response()->json(['message' => 'incorrect reset code.'], 400);
+            }
         } else {
-            return response()->json(['message' => 'incorrect reset code.'], 400);
+            return response()->json(['message' => 'No reset token found.'], 400);
         }
-    } else {
-        return response()->json(['message' => 'No reset token found.'], 400);
     }
-}
-
 
     public function getUser()
     {
-        $user=Auth::user();
-        $admin=Admin::where('user_id',$user->id)->first();
-       // dd($admin);
-        if($admin)
-       { return response()->json(['admin'=>true,'message'=>$user],200);}
-        return response()->json(['message'=>$user],200);
+        $user = Auth::user();
+        $admin = Admin::where('user_id', $user->id)->first();
+        // dd($admin);
+        if ($admin) {
+            return response()->json(['admin' => true, 'message' => $user], 200);
+        }
+        return response()->json(['message' => $user], 200);
     }
-
 
     public function image(Request $request)
     {
-        $image=$request->file('image');
-        $imageName = time().'_'.$image->getClientOriginalName();
-       $imagepath= $image->move(public_path('public/uploads'),$imageName);
-       $imagep='public/uploads'.$imageName;
-       return response()->json(['path'=>$imagep]);
+        $image = $request->file('image');
+        $imageName = time() . '_' . $image->getClientOriginalName();
+        $imagepath = $image->move(public_path('public/uploads'), $imageName);
+        $imagep = 'public/uploads' . $imageName;
+        return response()->json(['path' => $imagep]);
     }
 
-
-    public function Favorite(Request $request)
+    public function GetWeek()
     {
+        $data = Plan::all();
+        return response()->json(['data' => $data], 201);
+    }
+
+    public function PlanForUser($id)
+    {
+        $plan = Plan::find($id);
+        return response()->json(['data' => $plan->exercise], 201);
+    }
+
+    public function UpdatePlane(Request $request, $id)
+    {
+        $data = DB::table('plan_exercise')->where('id', $id)->update(['plan_id' => $request->plan_id, 'exercise_id' => $request->exercise_id]);
+        return response()->json('Plane Update Successfuly');
+    }
+
+    public function GetFavorite(Request $request, $id)
+    {
+        $get = Favorite::where('user_id', Auth::id())
+            ->where('id', $id)->get();
+        if ($get == '[]')
+            return response()->json(['message' => 'not found'], 404);
+        $getExercise = Favorite::where('user_id', Auth::id())
+            ->where('id', $id)->first();
+        $exercise = Exercise::where('id', $getExercise->exercise_id)->get();
+        return response()->json(['data' => $get, 'exercise' => $exercise], 200);
+    }
+      public function Favorite(Request $request)
+  {
        $user= Favorite::create([
             'user_id'=>Auth::id(),
             'exercise_id'=>$request->exercise_id,
@@ -211,21 +231,20 @@ public function reset(Request $request)
     public function AllFavorit()
     {
         $favorites = Favorite::where('user_id', Auth::id())->get();
-        if($favorites=='[]')
-        return response()->json(['message'=>'not found'],404);
+        if ($favorites == '[]')
+            return response()->json(['message' => 'not found'], 404);
         $favoriteids = $favorites
-        ->pluck('exercise_id')
-        ->toArray();
+            ->pluck('exercise_id')
+            ->toArray();
 
         $favoriteNames = Exercise::whereIn('id', $favoriteids)->get();
         $exerciseNames = $favoriteNames->
         pluck('name')
-        ->toArray();
+            ->toArray();
 
-        return response()->json(['message'=>'success','favorites' => $exerciseNames],200);
+        return response()->json(['message' => 'success', 'favorites' => $exerciseNames], 200);
 
     }
-
 
     public function delFavorite($id)
     {
@@ -237,3 +256,4 @@ public function reset(Request $request)
         return response()->json(['message' => 'Favorite exercise deleted successfully'], 200);
     }
 }
+
