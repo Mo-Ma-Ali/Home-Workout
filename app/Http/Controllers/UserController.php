@@ -214,17 +214,17 @@ class UserController extends Controller
     }
 
 
-    public function GetFavorite(Request $request , $id)
-    {
-        $get=Favorite::where('user_id',Auth::id())
-        ->where('id',$id)->get();
-        if($get=='[]')
-        return response()->json(['message'=>'not found'],404);
-        $getExercise=Favorite::where('user_id',Auth::id())
-        ->where('id',$id)->first();
-        $exercise = Exercise::where('id',$getExercise->exercise_id)->get();
-        return response()->json(['data'=>$get,'exercise'=>$exercise],200);
-    }
+    // public function GetFavorite(Request $request , $id)
+    // {
+    //     $get=Favorite::where('user_id',Auth::id())
+    //     ->where('id',$id)->get();
+    //     if($get=='[]')
+    //     return response()->json(['message'=>'not found'],404);
+    //     $getExercise=Favorite::where('user_id',Auth::id())
+    //     ->where('id',$id)->first();
+    //     $exercise = Exercise::where('id',$getExercise->exercise_id)->get();
+    //     return response()->json(['data'=>$get,'exercise'=>$exercise],200);
+    // }
 
 
 
