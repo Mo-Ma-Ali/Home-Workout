@@ -247,13 +247,33 @@ class UserController extends Controller
     }
 
     public function delFavorite($id)
-    {
-        $favorite = Favorite::where('user_id',Auth::id())->where(
-        'id',$id)->first();
-        if ($favorite==null)
-        return response()->json(['message'=>'not found'],200);
-        $favorite->delete();
-        return response()->json(['message' => 'Favorite exercise deleted successfully'], 200);
+{
+    $favorites = Favorite::where('user_id', Auth::id())->get();
+
+    if ($favorites->isEmpty()) {
+        return response()->json(['message' => 'not found'], 404);
     }
+
+    $exerciseNames = $favorites->pluck('exercise_id')->toArray();
+
+    if (!isset($exerciseNames[$id])) {
+        return response()->json(['message' => 'Favorite exercise not found'], 404);
+    }
+
+    $exerciseId = $exerciseNames[$id];
+
+    $favorite = Favorite::where('user_id', Auth::id())
+        ->where('exercise_id', $exerciseId)
+        ->first();
+
+    if (!$favorite) {
+        return response()->json(['message' => 'Favorite exercise not found'], 404);
+    }
+
+    $favorite->delete();
+
+    return response()->json(['message' => 'Favorite exercise deleted successfully'], 200);
+}
+
 }
 
