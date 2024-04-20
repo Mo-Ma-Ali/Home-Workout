@@ -26,7 +26,9 @@ class DatabaseSeeder extends Seeder
             coach::class,
             ExerciseSeeder::class,
             PlanSeeder::class,
-            PlanExerciseSeeder::class
+            PlanExerciseSeeder::class,
+            WeightLossSeeder::class,
+            PlanWeightLossSeeder::class,
         ]);
         $user=\App\Models\User::create([
             'name' => 'admin',
