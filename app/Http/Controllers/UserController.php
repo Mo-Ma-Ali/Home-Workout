@@ -170,33 +170,33 @@ class UserController extends Controller
     public function GetWeek()
     {
         $data = Plan::all();
-        return response()->json(['data' => $data], 201);
+        return response()->json(['message' => 'success','data' => $data], 201);
     }
     public function PlanForUser($id)
     {
         $plan = Plan::find($id);
-        return response()->json(['data' => $plan->exercise], 201);
+        return response()->json(['message' => 'success','data' => $plan->exercise], 201);
     }
     public function UpdatePlane(Request $request, $id)
     {
         $data = DB::table('plan_exercise')->where('id', $id)->update(['plan_id' => $request->plan_id, 'exercise_id' => $request->exercise_id]);
-        return response()->json('Plane Update Successfuly');
+        return response()->json(['message' => 'Plane Update Successfuly'],201);
     }
     public function GetWeightLossExercise()
     {
         $data=Loss::all();
-        return response()->json(['data'=>$data],201);
+        return response()->json(['message' => 'success','data'=>$data],201);
     }
     public function PlanforWeightLoss($id)
     {
         $plan=Plan::find($id);
-        return response()->json(['data'=>$plan->Loss]);
+        return response()->json(['message' => 'success','data'=>$plan->Loss]);
     }
     public function UpdatePlaneForWeightLoss(Request $request,$id)
     {
         $data=DB::table('plan_loss')->where('id',$id)->update(['plan_id'=>$request->plan_id,'Loss_id'=>$request->Loss_id]);
 
-        return response()->json(['Plane Update Successfully'],201);
+        return response()->json(['message' => 'Plane Update Successfully'],201);
     }
     public function GetFavorite(Request $request, $id)
     {
