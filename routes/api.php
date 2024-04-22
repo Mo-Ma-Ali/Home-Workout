@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\challenge;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\verifyController;
@@ -91,6 +92,7 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('PlanForWeightLoss/{id}',[UserController::class,'PlanforWeightLoss']);
     Route::post('UpdatePlaneForWeightLoss/{id}',[UserController::class,'UpdatePlaneForWeightLoss']);
 });
+Route::post('/chat', [ChatController::class, 'chat']);
 //Route::get('getexe',[ExerciseController::class,'Getexe']);
 Route::post('image',[UserController::class,'image']);
 Route::get('adminLogout',[Admin::class,'logout'])->middleware('admin');

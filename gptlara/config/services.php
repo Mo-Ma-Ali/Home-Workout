@@ -30,9 +30,5 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
-    'openai' => [
-        'api_key' => 'sk-proj-oQhNG1ZYmOt2WMvuQAvcT3BlbkFJk1ruzueao8XhxSijtsyG',
-    ],
-
 
 ];
