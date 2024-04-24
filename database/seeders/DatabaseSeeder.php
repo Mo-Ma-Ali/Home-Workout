@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\CateProduct;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -23,12 +24,14 @@ class DatabaseSeeder extends Seeder
         $this->call([
             LevelSeeder::class,
             CategorySeeder::class,
-            coach::class,
+           coach::class,
             ExerciseSeeder::class,
             PlanSeeder::class,
             PlanExerciseSeeder::class,
             WeightLossSeeder::class,
             PlanWeightLossSeeder::class,
+            CateProductSeeder::class,
+            ProductSeeder::class,
         ]);
         $user=\App\Models\User::create([
             'name' => 'admin',

@@ -6,6 +6,7 @@ use App\Models\Admin as ModelsAdmin;
 use App\Models\Exercise;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Stringable;
@@ -57,6 +58,5 @@ class Admin extends Controller
         }
         else
         return response()->json(['message'=>'user not found'],404);
-
     }
 }

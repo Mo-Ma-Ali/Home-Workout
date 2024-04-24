@@ -23,7 +23,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('addproduct',[\App\Http\Controllers\ProductController::class,'addproduct'])->middleware('admin');
+Route::get('updatepayment/{id}',[\App\Http\Controllers\OrderController::class,'UpdatePayment'])->middleware('admin');
 
+Route::get('GetCategory',[\App\Http\Controllers\ProductController::class,'GetCategoryProduct']);
+Route::get('GetProduct/{id}',[\App\Http\Controllers\ProductController::class,'GetProductFromId']);
 Route::post('register',[\App\Http\Controllers\UserController::class,'register']);
 Route::post('login',[UserController::class,'login']);
 Route::post('/admin',[Admin::class,'logAdmin']);
@@ -33,6 +37,11 @@ Route::post('check_code',[UserController::class,'verfiyReset']);
 Route::post('reset',[UserController::class,'reset']);
 Route::post('verify',[verifyController::class,'verify'])->name('verify')->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function (){
+    Route::get('DeleteOrder/{id}',[\App\Http\Controllers\OrderController::class,'DeleteOrder']);
+    Route::get('searchproduct/{id}',[\App\Http\Controllers\ProductController::class,'SearchProduct']);
+    Route::get('getorderwithproduct/{id}',[\App\Http\Controllers\OrderController::class,'Getorderwithproducet']);
+    Route::post('addtocart/{id}',[\App\Http\Controllers\OrderController::class,'AddToCart']);
+    Route::get('getorder/{id}',[\App\Http\Controllers\OrderController::class,'GetOrder']);
     ///////
     Route::get('/user',[UserController::class,'getUser']);
     ///////

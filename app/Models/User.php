@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use League\CommonMark\Extension\CommonMark\Node\Block\ThematicBreak;
 
 class User extends Authenticatable
 {
@@ -22,6 +23,10 @@ class User extends Authenticatable
         'email',
         'password',
     ];
+    public function order()
+    {
+        return $this->hasMany(Order::class);
+    }
     public function Progress()
     {
         return $this->hasMany(Progress::class);
@@ -43,7 +48,6 @@ class User extends Authenticatable
     {
         return $this->hasOne(Admin::class);
     }
-
     public function advices()
     {
         return $this->hasMany(Advice::class);
