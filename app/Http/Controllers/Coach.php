@@ -33,6 +33,7 @@ class Coach extends Controller
     public function advice(Request $request)
     {
         $couch = Auth::user();
+        $trainer = Advice::where('trainer_id', $request->trainer_id)->first();
         if($couch)
        {
         if (!Advice::where('trainer_id', $request->trainer_id)->exists()) {
@@ -42,7 +43,19 @@ class Coach extends Controller
                 'trainer_id' => $request->trainer_id,
             ]);
             return response()->json(['message' => 'success','advice' => $advice], 201);
-        }}
+        }
+        else if (Advice::where('trainer_id', $request->trainer_id)->exists()&&
+        $trainer->couch_id === $couch->id)
+        {
+            $advice = Advice::create([
+                'couch_id' => $couch->id,
+                'message' => $request->message,
+                'trainer_id' => $request->trainer_id,
+            ]);
+            return response()->json(['message' => 'success','advice' => $advice], 201);
+        }
+
+    }
         return response()->json(['message' => 'Advice for this trainer already exists'], 201);
     }
 
