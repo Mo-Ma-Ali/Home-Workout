@@ -13,17 +13,17 @@ class ProductController extends Controller
     public function GetCategoryProduct()
     {
         $Get=CateProduct::all();
-        return response()->json(['data'=>$Get],201);
+        return response()->json(['message'=>'success','data'=>$Get],201);
     }
     public function GetProductFromId($id)
     {
         $Get=product::query()->where('Cate_id',$id)->get();
-        return response()->json(['data'=>$Get],201);
+        return response()->json(['message'=>'success','data'=>$Get],201);
     }
     public function SearchProduct($id)
     {
         $search=product::query()->where('name','=',$id)->get();
-        return response()->json(['product'=>$search],201);
+        return response()->json(['message'=>'success','product'=>$search],201);
     }
 public function addproduct(Request $request)
 {
