@@ -18,7 +18,7 @@ class OrderController extends Controller
 {
     public function AddToCart(Request $request,$id)
     {
-        $ordere=new Order();
+        $ordere=Order::query()->insert(['user_id'=>Auth::id()]);
         $order = product::query()->findOrFail($id);
         if ($order)
         {
