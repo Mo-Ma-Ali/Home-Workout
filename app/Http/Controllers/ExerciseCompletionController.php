@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Exercise;
 use App\Models\ExerciseCompletion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -41,13 +42,39 @@ class ExerciseCompletionController extends Controller
     {
      $user=Auth::id();
      $record=ExerciseCompletion::where('user_id',$user)->get();
-     return response()->json(['message' => 'completed exercises','data'=>$record]);
+     $exercise_id = $record->pluck('exercise_id')->toArray();
+     $exerciseNames = Exercise::whereIn('id', $exercise_id)->pluck('name')->toArray();
+     $exerciseRecords = [];
+     foreach ($record as $records) {
+         $exerciseRecords[] = [
+             "id"=> $records->id,
+             "user_id"=> $records->user_id,
+             'exercise_id' => $records->exercise_id,
+             'exercise_name' => $exerciseNames[array_search($records->exercise_id, $exercise_id)],
+             "is_done"=> $records->is_done,
+
+         ];
+     }
+     return response()->json(['message' => 'completed exercises','data'=>$exerciseRecords]);
     }
 
     public function recordForCouch(Request $request)
     {
         $user_id = $request->input('user_id');
         $record=ExerciseCompletion::where('user_id',$user_id)->get();
-        return response()->json(['message' => 'completed exercises','data'=>$record]);
+        $exercise_id = $record->pluck('exercise_id')->toArray();
+        $exerciseNames = Exercise::whereIn('id', $exercise_id)->pluck('name')->toArray();
+        $exerciseRecords = [];
+        foreach ($record as $records) {
+            $exerciseRecords[] = [
+                "id"=> $records->id,
+                "user_id"=> $records->user_id,
+                'exercise_id' => $records->exercise_id,
+                'exercise_name' => $exerciseNames[array_search($records->exercise_id, $exercise_id)],
+                "is_done"=> $records->is_done,
+
+            ];
+        }
+        return response()->json(['message' => 'completed exercises','data'=>$exerciseRecords]);
     }
 }
