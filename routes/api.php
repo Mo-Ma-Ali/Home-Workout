@@ -94,8 +94,12 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::resource('categaroy',CategoryController::class);
 
     Route::post('requestAdvice',[Coach::class,'requestAdvice']);///////
+    //////
     Route::post('/verifyExercise',[ExerciseCompletionController::class,'verifyExercise']);
+    //////
     Route::get('/getExerciseRecord',[ExerciseCompletionController::class,'getExerciseRecord']);
+    /////
+    Route::post('/getExerciseRecord',[ExerciseCompletionController::class,'recordForCouch'])->middleware('couch');
     ///
     Route::post('TargetWeight',[\App\Http\Controllers\ProgressController::class,'TargetWeight']);
     Route::get('GetDetails/{id}',[\App\Http\Controllers\ProgressController::class,'GetDetails']);

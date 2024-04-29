@@ -62,6 +62,19 @@ class ExerciseCompletionController extends Controller
     {
         $user_id = $request->input('user_id');
         $record=ExerciseCompletion::where('user_id',$user_id)->get();
-        return response()->json(['message' => 'completed exercises','data'=>$record]);
+        $exercise_id = $record->pluck('exercise_id')->toArray();
+        $exerciseNames = Exercise::whereIn('id', $exercise_id)->pluck('name')->toArray();
+        $exerciseRecords = [];
+        foreach ($record as $records) {
+            $exerciseRecords[] = [
+                "id"=> $records->id,
+                "user_id"=> $records->user_id,
+                'exercise_id' => $records->exercise_id,
+                'exercise_name' => $exerciseNames[array_search($records->exercise_id, $exercise_id)],
+                "is_done"=> $records->is_done,
+
+            ];
+        }
+        return response()->json(['message' => 'completed exercises','data'=>$exerciseRecords]);
     }
 }
