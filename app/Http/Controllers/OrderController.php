@@ -18,7 +18,7 @@ class OrderController extends Controller
 {
     public function AddToCart(Request $request,$id)
     {
-        $ordere=new Order();
+        $ordere=Order::query()->insert(['user_id'=>Auth::id()]);
         $order = product::query()->findOrFail($id);
         if ($order)
         {
@@ -45,12 +45,12 @@ class OrderController extends Controller
     public function GetOrder($id)
     {
       $data=User::find($id);
-        return response()->json(['order'=>$data->order],201);
+        return response()->json(['message' => 'success','order'=>$data->order],201);
     }
     public function Getorderwithproducet($id)
     {
         $order=order::query()->findOrFail($id);
-        return response()->json(['data'=>$order->Product],201);
+        return response()->json(['message' => 'success','data'=>$order->Product],201);
     }
     public function DeleteOrder($id)
     {
