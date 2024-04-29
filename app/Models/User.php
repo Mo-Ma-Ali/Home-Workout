@@ -58,6 +58,11 @@ class User extends Authenticatable
         ->withPivot('start_at', 'completed_at', 'done')
         ->withTimestamps();
     }
+
+    public function ExerciseCompletion()
+    {
+        return $this->hasMany(ExerciseCompletion::class);
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

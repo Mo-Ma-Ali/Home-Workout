@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Advice extends Model
 {
     use HasFactory;
-    protected $fillable=['message','trainer_id','couch_id'];
+    protected $fillable=['message','request_advice','trainer_id','couch_id'];
     public function coach()
     {
         return $this->belongsTo(Coach::class);

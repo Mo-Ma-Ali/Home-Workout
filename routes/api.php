@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\challenge;
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Coach;
+use App\Http\Controllers\ExerciseCompletionController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\verifyController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\Workout\CategoryController;
 use App\Http\Controllers\Workout\ExerciseController;
 use App\Http\Controllers\Workout\LevelsController;
 use App\Models\Category;
+use App\Models\ExerciseCompletion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -89,6 +92,10 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::resource('level', LevelsController::class);
     ////
     Route::resource('categaroy',CategoryController::class);
+
+    Route::post('requestAdvice',[Coach::class,'requestAdvice']);///////
+    Route::post('/verifyExercise',[ExerciseCompletionController::class,'verifyExercise']);
+    Route::get('/getExerciseRecord',[ExerciseCompletionController::class,'getExerciseRecord']);
     ///
     Route::post('TargetWeight',[\App\Http\Controllers\ProgressController::class,'TargetWeight']);
     Route::get('GetDetails/{id}',[\App\Http\Controllers\ProgressController::class,'GetDetails']);

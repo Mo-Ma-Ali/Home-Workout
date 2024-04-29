@@ -30,13 +30,38 @@ class Coach extends Controller
         }
 
     }
+
+    public function requestAdvice(Request $request)
+    {
+        $user = Auth::user();
+        $couch = $request->input('couch_id');
+        $request_advice = $request->input('request_advice');
+        if($couch)
+        {
+            $advice = Advice::create(
+                [
+                    'couch_id' => $couch,
+                    'request_advice' => $request_advice,
+                    'trainer_id' => $user->id,
+                ]
+                );
+            return response()->json(['message' => 'success','request_advice' => $advice], 201);
+        }
+        return response()->json(['message' => 'the couch is not found',], 200);
+    }
+
+
+
     public function advice(Request $request)
     {
         $couch = Auth::user();
-        $trainer = Advice::where('trainer_id', $request->trainer_id)->first();
+        $trainer = Advice::where('trainer_id', $request->trainer_id)->where('couch_id', $couch->id)
+        ->where('request_advice', true)->first();
+        //dd($trainer);
         if($couch)
        {
-        if (!Advice::where('trainer_id', $request->trainer_id)->exists()) {
+        if (!Advice::where('trainer_id', $request->trainer_id)->where('couch_id', $couch->id)
+        ->where('request_advice', true)->exists()) {
             $advice = Advice::create([
                 'couch_id' => $couch->id,
                 'message' => $request->message,
@@ -44,7 +69,17 @@ class Coach extends Controller
             ]);
             return response()->json(['message' => 'success','advice' => $advice], 201);
         }
-        else if (Advice::where('trainer_id', $request->trainer_id)->exists()&&
+        else if(Advice::where('trainer_id', $request->trainer_id)->where('couch_id', $couch->id)
+        ->where('request_advice', true)->exists())
+        {
+            $trainer->update(
+                ['message'=>$request->message,
+                 'request_advice' => false,
+                ]);
+            return response()->json(['message' => 'success','advice' => $trainer], 201);
+        }
+        else if (Advice::where('trainer_id', $request->trainer_id)->where('couch_id', $couch->id)
+        ->where('request_advice', null)->exists()&&
         $trainer->couch_id === $couch->id)
         {
             $advice = Advice::create([
