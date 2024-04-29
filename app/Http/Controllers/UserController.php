@@ -59,7 +59,7 @@ class UserController extends Controller
         $token = $user->createToken('authtoken')->plainTextToken;
         $user->createCode();
 
-       $user->notify(new VerifyEmailNotification());
+       //$user->notify(new VerifyEmailNotification());
         return response()->json(['message' => 'success','user' => $user, 'token' => $token], 201);
     }
     public function login(Request $request)

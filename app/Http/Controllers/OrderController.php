@@ -55,7 +55,8 @@ class OrderController extends Controller
     public function DeleteOrder($id)
     {
         $delete=DB::table('product_order')->where('id',$id)->delete($id);
-        if (!$delete)
+        $order=Order::query()->where('id',$id)->delete($id);
+        if (!$delete && !$order)
         {
             return response()->json(['message'=>'NotFound']);
         }

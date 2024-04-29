@@ -27,14 +27,15 @@ class ProductController extends Controller
     }
 public function addproduct(Request $request)
 {
-    $image=$request->file('image');
-    $imageName = time() . '_' . $image->getClientOriginalName();
-    $imagepath=$image->move(public_path('public/uploads'),$imageName);
-    $imagep = 'public/uploads' . $imageName;
+//    $image=$request->file('image');
+//    $imageName = time() . '_' . $image->getClientOriginalName();
+//    $imagepath=$image->move(public_path('public/uploads'),$imageName);
+//    $imagep = 'public/uploads' . $imageName;
     $add=product::query()->create([
         'name'=>$request->name,
         'cost'=>$request->cost,
-        'image'=>$imagep,
+        'image'=>$request->image,
+        'points_cost'=>$request->points_cost,
         'amount'=>$request->amount,
         'Cate_id'=>$request->Cate_id,
     ]);
