@@ -21,4 +21,8 @@ class ExerciseCompletion extends Model
     {
        return $this->BelongsToMany(Exercise::class);
     }
+    public function Progress()
+    {
+        return $this->belongsTo(Progress::class);
+    }
 }

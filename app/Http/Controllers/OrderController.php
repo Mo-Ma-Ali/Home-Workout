@@ -54,13 +54,9 @@ class OrderController extends Controller
     }
     public function DeleteOrder($id)
     {
-        $delete=DB::table('product_order')->where('id',$id)->delete($id);
-        $order=Order::query()->where('id',$id)->delete($id);
-        if (!$delete && !$order)
-        {
-            return response()->json(['message'=>'NotFound']);
-        }
-        return response()->json(['product delete successfully'],201);
+        $order=DB::table('product_order')->where('order_id',$id)->delete();
+        $ordere=DB::table('orders')->where('user_id',Auth::id())->delete();
+        return response()->json(['message'=>'Order Delete Successfully','delete'=>$order,'reset'=> DB::statement("ALTER TABLE orders AUTO_INCREMENT = 1")]);
     }
     public function UpdatePayment($id)
     {

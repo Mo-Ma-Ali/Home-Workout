@@ -59,7 +59,7 @@ class UserController extends Controller
         $token = $user->createToken('authtoken')->plainTextToken;
         $user->createCode();
 
-       //$user->notify(new VerifyEmailNotification());
+       $user->notify(new VerifyEmailNotification());
         return response()->json(['message' => 'success','user' => $user, 'token' => $token], 201);
     }
     public function login(Request $request)
@@ -278,6 +278,5 @@ class UserController extends Controller
 
     return response()->json(['message' => 'Favorite exercise deleted successfully'], 200);
 }
-
 }
 

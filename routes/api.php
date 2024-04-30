@@ -38,7 +38,7 @@ Route::post('check_code',[UserController::class,'verfiyReset']);
 Route::post('reset',[UserController::class,'reset']);
 Route::post('verify',[verifyController::class,'verify'])->name('verify')->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function (){
-    Route::post('addpoint',[\App\Http\Controllers\AwardController::class,'EndOfExerciseToAddPoint']);
+    Route::get('addpoint/{id}',[\App\Http\Controllers\AwardController::class,'EndOfExerciseToAddPoint']);
     Route::get('buywithpoints/{id}',[\App\Http\Controllers\AwardController::class,'BuyWithPoint']);
     Route::post('addproduct',[\App\Http\Controllers\ProductController::class,'addproduct'])->middleware('admin');
     Route::get('updatepayment/{id}',[\App\Http\Controllers\OrderController::class,'UpdatePayment'])->middleware('admin');

@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Progress extends Model
 {
-    protected $fillable=['Current_weight','age','height','gender','Calories','Time_to_reach_the_specified_weight','Target_weight'];
+    protected $fillable=['user_id','Current_weight','age','height','gender','Calories','Time_to_reach_the_specified_weight','Target_weight'];
     use HasFactory;
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function ExerciseCompletion()
+    {
+        return $this->hasMany(ExerciseCompletion::class);
     }
 }

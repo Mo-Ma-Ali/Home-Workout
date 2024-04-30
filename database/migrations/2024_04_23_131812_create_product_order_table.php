@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('product_order', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id')->constrained('products');
-            $table->foreignId('order_id')->constrained('orders');
+            $table->foreignId('order_id')->constrained('orders')->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users');
             $table->string('amount');
             $table->enum('Payment',['paid','unpaid'])->default('unpaid');
