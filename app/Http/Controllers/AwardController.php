@@ -33,23 +33,23 @@ public function BuyWithPoint(Request $request,$id)
 
         }
     }
-
-    public function EndOfExerciseToAddPoint(Request $request,$id)
-    {
-
-        $exercise=ExerciseCompletion::query()->where('user_id',Auth::id())->where('id',$id)->where('is_done','=',1)->exists();
-        if ($exercise) {
-//            $addpoints=$request->input('number');
-            $pro=Progress::where('user_id',Auth::id())->first();
-            if (!$pro)
-            {
-                $pro=new Progress(['user_id'=>Auth::id()]);
-            }
-            $pro->points+=30;
-            $pro->save();
-            return response()->json(['message' => 'You completed the exercise and got 30 points']);
-        }else{
-            return response()->json(['message'=>'Sorry, you did not complete your exercise']);
-        }
-    }
+    //Move to ExerciseComplletionController
+//    public function EndOfExerciseToAddPoint(Request $request,$id)
+//    {
+//
+//        $exercise=ExerciseCompletion::query()->where('user_id',Auth::id())->where('id',$id)->where('is_done','=',1)->exists();
+//        if ($exercise) {
+////            $addpoints=$request->input('number');
+//            $pro=Progress::where('user_id',Auth::id())->first();
+//            if (!$pro)
+//            {
+//                $pro=new Progress(['user_id'=>Auth::id()]);
+//            }
+//            $pro->points+=30;
+//            $pro->save();
+//            return response()->json(['message' => 'You completed the exercise and got 30 points']);
+//        }else{
+//            return response()->json(['message'=>'Sorry, you did not complete your exercise']);
+//        }
+//    }
 }
