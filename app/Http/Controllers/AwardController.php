@@ -33,7 +33,7 @@ public function BuyWithPoint(Request $request,$id)
 
         }
     }
-    //Move to ExerciseComplletionController
+    //Move to ExerciseComplletionControllermAnd challenge
 //    public function EndOfExerciseToAddPoint(Request $request,$id)
 //    {
 //
