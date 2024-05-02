@@ -55,17 +55,6 @@ Route::middleware('auth:sanctum')->group(function (){
     Route::get('annualExe',[\App\Http\Controllers\ReportController::class,'annualForExercise']);
 Route::get('GetExercise/{id}',[\App\Http\Controllers\ReportController::class,'GetExerciseWhereid']);
 
-
-
-
-
-
-
-
-
-
-
-
     Route::get('addpoint/{id}',[\App\Http\Controllers\AwardController::class,'EndOfExerciseToAddPoint']);
     Route::get('buywithpoints/{id}',[\App\Http\Controllers\AwardController::class,'BuyWithPoint']);
     Route::post('addproduct',[\App\Http\Controllers\ProductController::class,'addproduct'])->middleware('admin');
@@ -85,7 +74,7 @@ Route::get('GetExercise/{id}',[\App\Http\Controllers\ReportController::class,'Ge
     ////////
     Route::get('/enroll/{challenge_id}',[challenge::class,'enroll']);
     ////////
-    Route::put('/completed/{challenge_id}',[challenge::class,'endOfChallenge']);
+    Route::put('/completed/{challenge_id}/{id}',[challenge::class,'endOfChallenge']);
     //Route::post('add',[\App\Http\Controllers\Admin::class,'Add']);
     /////
     Route::get('getCoach',[\App\Http\Controllers\Coach::class,'GetCoach']);
@@ -125,7 +114,7 @@ Route::get('GetExercise/{id}',[\App\Http\Controllers\ReportController::class,'Ge
 
     Route::post('requestAdvice',[Coach::class,'requestAdvice']);///////
     //////
-    Route::post('/verifyExercise',[ExerciseCompletionController::class,'verifyExercise']);
+    Route::post('/verifyExercise/{id}',[ExerciseCompletionController::class,'verifyExercise']);
     //////
     Route::get('/getExerciseRecord',[ExerciseCompletionController::class,'getExerciseRecord']);
     /////

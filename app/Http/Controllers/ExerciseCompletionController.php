@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 class ExerciseCompletionController extends Controller
 {
 
-    public function verifyExercise(Request $request)
+    public function verifyExercise(Request $request,$id)
     {
         $user = Auth::id();
         $exercise_id = $request->input('exercise_id');
@@ -39,7 +39,7 @@ class ExerciseCompletionController extends Controller
             }
         if ($is_done)
         {
-            $user=new User();
+            $user=User::find($id);
             $user->points+=30;
             $user->save();
         }

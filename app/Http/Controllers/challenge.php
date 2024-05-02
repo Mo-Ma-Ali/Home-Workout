@@ -101,7 +101,7 @@ public function enroll($challenge_id)
     return response()->json(['message' => 'Enrolled', 'challenge' => $challenge], 201);
 }
 
-public function endOfChallenge(Request $request, $challenge_id)
+public function endOfChallenge(Request $request, $challenge_id,$id)
 {
     $user_id = auth()->id();
     $completed_at = Carbon::now();
@@ -114,7 +114,7 @@ public function endOfChallenge(Request $request, $challenge_id)
         $endTime = $start_at->copy()->addMinutes($challenge->end_at);
 
         if ($completed_at <= $endTime) {
-           $user=new User();
+           $user=User::find($id);
            $user->points+=100;
             $user->save();
             $challenge->users()->updateExistingPivot($user_id, ['done' => true]);
