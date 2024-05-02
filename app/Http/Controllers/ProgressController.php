@@ -29,7 +29,7 @@ class ProgressController extends Controller
     }
     public function GetDetails(Request $request,$id)
     {
-        $get=Progress::query()->where('id',$id)->select(['points','id','user_id','Current_weight','age','height','gender','Calories'])->get();
+        $get=Progress::query()->where('id',$id)->select(['id','user_id','Current_weight','age','height','gender','Calories'])->get();
         return response()->json(['message' => 'success','Details'=>$get],201);
     }
     public function TargetWeight(Request $request)

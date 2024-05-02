@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exercise;
 use App\Models\ExerciseCompletion;
 use App\Models\Progress;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,13 +39,9 @@ class ExerciseCompletionController extends Controller
             }
         if ($is_done)
         {
-            $pro=Progress::where('user_id',Auth::id())->first();
-            if (!$pro)
-            {
-                $pro=new Progress(['user_id'=>Auth::id()]);
-            }
-            $pro->points+=30;
-            $pro->save();
+            $user=new User();
+            $user->points+=30;
+            $user->save();
         }
         return response()->json(['message' => 'The exercise has been recorded successfully'], 201);
     }

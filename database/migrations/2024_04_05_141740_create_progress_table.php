@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->integer('Current_weight')->default(0);
             $table->integer('age');
-            $table->integer('points')->default(0);
             $table->integer('height');
             $table->enum('gender',['feminine','man']);
             $table->integer('Target_weight')->default(0);

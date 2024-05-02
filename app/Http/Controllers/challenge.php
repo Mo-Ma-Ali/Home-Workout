@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Challenge as ModelsChallenge;
 use App\Models\Progress;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -113,13 +114,9 @@ public function endOfChallenge(Request $request, $challenge_id)
         $endTime = $start_at->copy()->addMinutes($challenge->end_at);
 
         if ($completed_at <= $endTime) {
-            $pro=Progress::where('user_id',Auth::id())->first();
-           if (!$pro)
-           {
-                $pro=new Progress(['user_id'=>Auth::id()]);
-           }
-           $pro->points+=100;
-            $pro->save();
+           $user=new User();
+           $user->points+=100;
+            $user->save();
             $challenge->users()->updateExistingPivot($user_id, ['done' => true]);
             $challenge->users()->updateExistingPivot($user_id, ['completed_at' => $completed_at]);
 

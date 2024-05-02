@@ -7,6 +7,7 @@ use App\Models\ExerciseCompletion;
 use App\Models\order;
 use App\Models\product;
 use App\Models\Progress;
+use App\Models\User;
 use App\Models\WorkoutCompletion;
 use http\Env\Response;
 use Illuminate\Http\Request;
@@ -19,11 +20,11 @@ public function BuyWithPoint(Request $request,$id)
     {
         $product=product::query()->findOrFail($id);
         if ($product) {
-            $progress =Progress::where('user_id',Auth::id())->first();
+            $progress =User::where('user_id',Auth::id())->first();
             if ($progress->points >= $product->points_cost) {
                 $progress->points -= $product->points_cost;
                 $progress->save();
-                $point=Progress::query()->where('user_id',Auth::id())->select('points')->get();
+                $point=User::query()->where('user_id',Auth::id())->select('points')->get();
                 $pr=product::query()->where('id',$id)->select('points_cost')->get();
                 return response()->json(['cost of product'=>$pr,'point after Buy'=>$point,'message'=>'Your purchase has been completed successfully']);
             }
