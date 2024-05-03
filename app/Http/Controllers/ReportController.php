@@ -92,9 +92,9 @@ class ReportController extends Controller
         $order=DB::table('product_order')->where('user_id',Auth::id())->whereYear('created_at',$year)->get();
         if ($order)
         {
-            return \response()->json(['message'=>'success','Report For Year'=>$order]);
+            return response()->json(['message'=>'success','Report For Year'=>$order]);
         }else{
-            return \response()->json(['Sorry No Report'],201);
+            return response()->json(['Sorry No Report'],201);
         }
     }
     public function DailyForExercise(Request $request){

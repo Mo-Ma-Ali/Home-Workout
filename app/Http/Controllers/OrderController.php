@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\product;
 use App\Models\producte;
 use App\Models\User;
+use Carbon\Carbon;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +38,7 @@ class OrderController extends Controller
                     'product_id' => $request->product_id,
                     'amount' => $Quantitybyorder,
                         'order_id'=>$request->order_id,
+                        'created_at'=>Carbon::now(),
                         ]);
             }
             return response()->json(['message' => 'success', 'cart' => $add]);
