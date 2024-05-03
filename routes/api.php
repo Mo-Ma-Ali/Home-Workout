@@ -59,7 +59,7 @@ Route::get('GetExercise/{id}',[\App\Http\Controllers\ReportController::class,'Ge
     Route::get('buywithpoints/{id}/{id1}',[\App\Http\Controllers\AwardController::class,'BuyWithPoint']);
     Route::post('addproduct',[\App\Http\Controllers\ProductController::class,'addproduct'])->middleware('admin');
     Route::get('updatepayment/{id}',[\App\Http\Controllers\OrderController::class,'UpdatePayment'])->middleware('admin');
-    Route::get('DeleteOrder/{id}',[\App\Http\Controllers\OrderController::class,'DeleteOrder']);
+    Route::get('DeleteOrder/{id}/{id1}',[\App\Http\Controllers\OrderController::class,'DeleteOrder']);
     Route::get('searchproduct/{id}',[\App\Http\Controllers\ProductController::class,'SearchProduct']);
     Route::get('getorderwithproduct/{id}',[\App\Http\Controllers\OrderController::class,'Getorderwithproducet']);
     Route::post('addtocart/{id}',[\App\Http\Controllers\OrderController::class,'AddToCart']);
