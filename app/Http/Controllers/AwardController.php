@@ -16,15 +16,15 @@ use Illuminate\Support\Facades\DB;
 
 class AwardController extends Controller
 {
-public function BuyWithPoint(Request $request,$id)
+public function BuyWithPoint(Request $request,$id,$id1)
     {
         $product=product::query()->findOrFail($id);
         if ($product) {
-            $progress =User::where('user_id',Auth::id())->first();
+            $progress =User::find($id1);
             if ($progress->points >= $product->points_cost) {
                 $progress->points -= $product->points_cost;
                 $progress->save();
-                $point=User::query()->where('user_id',Auth::id())->select('points')->get();
+                $point=User::query()->where('id','=',$id1)->select('points')->get();
                 $pr=product::query()->where('id',$id)->select('points_cost')->get();
                 return response()->json(['cost of product'=>$pr,'point after Buy'=>$point,'message'=>'Your purchase has been completed successfully']);
             }

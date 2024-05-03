@@ -56,7 +56,7 @@ Route::middleware('auth:sanctum')->group(function (){
 Route::get('GetExercise/{id}',[\App\Http\Controllers\ReportController::class,'GetExerciseWhereid']);
 
     Route::get('addpoint/{id}',[\App\Http\Controllers\AwardController::class,'EndOfExerciseToAddPoint']);
-    Route::get('buywithpoints/{id}',[\App\Http\Controllers\AwardController::class,'BuyWithPoint']);
+    Route::get('buywithpoints/{id}/{id1}',[\App\Http\Controllers\AwardController::class,'BuyWithPoint']);
     Route::post('addproduct',[\App\Http\Controllers\ProductController::class,'addproduct'])->middleware('admin');
     Route::get('updatepayment/{id}',[\App\Http\Controllers\OrderController::class,'UpdatePayment'])->middleware('admin');
     Route::get('DeleteOrder/{id}',[\App\Http\Controllers\OrderController::class,'DeleteOrder']);
