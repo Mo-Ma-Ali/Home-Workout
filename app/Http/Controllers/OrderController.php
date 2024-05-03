@@ -60,10 +60,10 @@ class OrderController extends Controller
         if ($product)
         {
             $order=Order::query()->where('id',$id)->delete();
-            return \response()->json(['message'=>'success'],201);
+            return response()->json(['message'=>'success'],201);
         }
         else{
-            return \response()->json(['sorry no order'],201);
+            return response()->json(['sorry no order'],201);
         }
     }
     public function UpdatePayment($id)
