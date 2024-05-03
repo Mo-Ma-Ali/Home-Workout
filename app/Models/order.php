@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class order extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     protected $fillable=['user_id','product_id','amount','order_id'];
     public function Product(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
