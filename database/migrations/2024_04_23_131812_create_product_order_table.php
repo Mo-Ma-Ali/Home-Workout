@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users');
             $table->string('amount');
             $table->enum('Payment',['paid','unpaid'])->default('unpaid');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

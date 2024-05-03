@@ -37,8 +37,8 @@ class OrderController extends Controller
                     'user_id' => Auth::id(),
                     'product_id' => $request->product_id,
                     'amount' => $Quantitybyorder,
-                        'order_id'=>$request->order_id,
-                        'created_at'=>Carbon::now(),
+                    'order_id'=>$request->order_id,
+                    'created_at'=>Carbon::now(),
                         ]);
             }
             return response()->json(['message' => 'success', 'cart' => $add]);
@@ -56,9 +56,15 @@ class OrderController extends Controller
     }
     public function DeleteOrder($id)
     {
-        $order=DB::table('product_order')->where('order_id',$id)->delete();
-        $ordere=DB::table('orders')->where('user_id',Auth::id())->delete();
-        return response()->json(['message'=>'Order Delete Successfully','delete'=>$order,'reset'=> DB::statement("ALTER TABLE orders AUTO_INCREMENT = 1")]);
+        $product=DB::table('product_order')->where('id',$id)->delete();
+        if ($product)
+        {
+            $order=Order::query()->where('id',$id)->delete();
+            return \response()->json(['message'=>'success'],201);
+        }
+        else{
+            return \response()->json(['sorry no order'],201);
+        }
     }
     public function UpdatePayment($id)
     {
