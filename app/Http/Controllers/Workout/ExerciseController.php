@@ -45,24 +45,34 @@ class ExerciseController extends Controller
 
     public function store(Request $request)
 {
-    $validatedData = $request->validate([
-        'Level_id' => 'required|integer',
-        'category_id' => 'required|integer',
-        'name' => 'required|string',
-        'description' => 'required|string',
-        'date'=> 'required|integer',
-        'video' => 'required|string',
-    ]);
+    // $validatedData = $request->validate([
+    //     'Level_id' => 'required|integer',
+    //     'category_id' => 'required|integer',
+    //     'name' => 'required|string',
+    //     'description' => 'required|string',
+    //     'date'=> 'required|integer',
+    //     'video' => 'required|string',
+    // ]);
     $existingExercise = Exercise::where([
-        'Level_id' => $validatedData['Level_id'],
-        'category_id' => $validatedData['category_id'],
-        'name' => $validatedData['name'],
+        'Level_id' => $request->input('Level_id'),
+        'category_id' => $request->input('category_id'),
+        'name' => $request->input('name'),
     ])->first();
 
     if ($existingExercise) {
         return response()->json(['message' => 'The exercise already exists'], 409);
     }
-    $exercise = Exercise::create($validatedData);
+    //dd($validatedData);
+    $exercise = Exercise::create(
+        [
+            'Level_id' => $request->input('Level_id'),
+            'category_id' => $request->input('category_id'),
+            'name' => $request->input('name'),
+            'description' =>$request->input('description'),
+            'date'=> $request->input('date'),
+            'video' => $request->input('video'),
+        ]
+    );
 
     return response()->json(['message' => 'Exercise created successfully', 'exercise' => $exercise], 201);
 }

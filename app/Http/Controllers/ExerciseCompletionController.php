@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Auth;
 class ExerciseCompletionController extends Controller
 {
 
-    public function verifyExercise(Request $request,$id)
+    public function verifyExercise(Request $request)
     {
         $user = Auth::id();
+        $user_ = Auth::user();
         $exercise_id = $request->input('exercise_id');
         $is_done = $request->input('is_done');
 
@@ -36,14 +37,13 @@ class ExerciseCompletionController extends Controller
                 'exercise_id' => $exercise_id,
                 'is_done' => $is_done
             ]);
+            if ($is_done)
+            {
+                $user_->points+=30;
+                $user_->save();
             }
-        if ($is_done)
-        {
-            $user=User::find($id);
-            $user->points+=30;
-            $user->save();
+            return response()->json(['message' => 'The exercise has been recorded successfully'], 201);
         }
-        return response()->json(['message' => 'The exercise has been recorded successfully'], 201);
     }
 
 
