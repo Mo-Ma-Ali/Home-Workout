@@ -28,6 +28,8 @@ class ExerciseCompletionController extends Controller
             if ($ExerciseCompletion->is_done) {
                 return response()->json(['message' => 'The exercise for this day is already marked as done'], 200);
             } else if(!$ExerciseCompletion->is_done&&$is_done==true) {
+                    $user_->points+=30;
+                    $user_->save();
                 $ExerciseCompletion->update(['is_done' => $is_done]);
                 return response()->json(['message' => 'The exercise is completed. Well done!'], 200);
             }
