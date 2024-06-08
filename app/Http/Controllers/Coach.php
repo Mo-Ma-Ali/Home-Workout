@@ -38,6 +38,8 @@ class Coach extends Controller
         $request_advice = $request->input('request_advice');
         if($couch)
         {
+            if(!Advice::where('trainer_id',$user->id)->where('request_advice',1)->exists())
+           {
             $advice = Advice::create(
                 [
                     'couch_id' => $couch,
@@ -46,8 +48,11 @@ class Coach extends Controller
                 ]
                 );
             return response()->json(['message' => 'success','request_advice' => $advice], 201);
+            }
+            else
+            return response()->json(['message' => 'the request already send'], 200);;
         }
-        return response()->json(['message' => 'the couch is not found',], 200);
+        return response()->json(['message' => 'the couch is not found'], 200);
     }
 
 
@@ -100,9 +105,10 @@ class Coach extends Controller
         return response()->json(['message' => 'success','data'=>$user]);
     }
 
-    public function getrequest($id)
+    public function getrequest()
     {
-        $user=Advice::where('trainer_id',$id)->get();
+        $couch = Auth::user();
+        $user=Advice::where('couch_id',$couch->id)->where('request_advice',1)->get();
         return response()->json(['message' => 'success','data'=>$user]);
     }
 
