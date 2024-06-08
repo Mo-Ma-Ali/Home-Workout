@@ -57,6 +57,8 @@ class OrderController extends Controller
     public function DeleteOrder($id,$id1)
     {
         $product=DB::table('product_order')->where('product_id','=',$id)->where('order_id',$id1)->delete();
+
+       /// return response()->json(['message'=>$product,'product Delete Successfully'],201);
             return response()->json(['message1' => 'success' , 'message'=>$product,'product Delete Successfully'],201);
     }
     public function UpdatePayment($id)
