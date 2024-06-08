@@ -9,6 +9,7 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+        ///////////?????????
     public function up(): void
     {
         Schema::create('cate_products', function (Blueprint $table) {

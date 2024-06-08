@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('workout_completions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->constrained('users');
             $table->foreignId('Level_id')->constrained('levels');
             $table->foreignId('category_id')->constrained('cates');
             $table->boolean('is_done');

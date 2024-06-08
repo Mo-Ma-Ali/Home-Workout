@@ -10,7 +10,7 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+///////////////////////////////////////
 class ReportController extends Controller
 {
     public function DailyForProgress(Request $request)

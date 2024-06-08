@@ -1,5 +1,7 @@
 <?php
-
+///////////////////////////////////////////////////
+//////REMEMBER TO CLEAN THE CODE AT THE END////////
+///////////////////////////////////////////////////
 use App\Http\Controllers\Admin;
 use App\Http\Controllers\challenge;
 use App\Http\Controllers\ChatController;
@@ -11,9 +13,6 @@ use App\Http\Controllers\verifyController;
 use App\Http\Controllers\Workout\CategoryController;
 use App\Http\Controllers\Workout\ExerciseController;
 use App\Http\Controllers\Workout\LevelsController;
-use App\Models\Category;
-use App\Models\ExerciseCompletion;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,23 +38,23 @@ Route::post('reset',[UserController::class,'reset']);
 Route::post('verify',[verifyController::class,'verify'])->name('verify')->middleware('auth:sanctum');
 Route::middleware('auth:sanctum')->group(function (){
     //ReportForProgress
-    Route::get('DailyProgress',[\App\Http\Controllers\ReportController::class,'DailyForProgress']);
+    Route::get('DailyProgress',[\App\Http\Controllers\ReportController::class,'DailyForProgress']);////
     Route::get('WeeklyProgress',[\App\Http\Controllers\ReportController::class,'WeeklyForProgress']);
     Route::get('MonthlyProgress',[\App\Http\Controllers\ReportController::class,'MonthlyForProgress']);
     Route::get('annualProgress',[\App\Http\Controllers\ReportController::class,'annualForProgress']);
     //ReportFororder
-    Route::get('Dailyorder',[\App\Http\Controllers\ReportController::class,'DailyForOrder']);
+    Route::get('Dailyorder',[\App\Http\Controllers\ReportController::class,'DailyForOrder']);/////
     Route::get('Weeklyorder',[\App\Http\Controllers\ReportController::class,'WeeklyForOrder']);
     Route::get('Monthlyorder',[\App\Http\Controllers\ReportController::class,'MonthlyForOrder']);
     Route::get('annualorder',[\App\Http\Controllers\ReportController::class,'annualFororder']);
     //ReportForExercise
-    Route::get('DailyExe',[\App\Http\Controllers\ReportController::class,'DailyForExercise']);
+    Route::get('DailyExe',[\App\Http\Controllers\ReportController::class,'DailyForExercise']);/////
     Route::get('WeeklyExe',[\App\Http\Controllers\ReportController::class,'WeeklyForExercise']);
     Route::get('MonthExe',[\App\Http\Controllers\ReportController::class,'MonthlyForExercise']);
     Route::get('annualExe',[\App\Http\Controllers\ReportController::class,'annualForExercise']);
-Route::get('GetExercise/{id}',[\App\Http\Controllers\ReportController::class,'GetExerciseWhereid']);
+    Route::get('GetExercise/{id}',[\App\Http\Controllers\ReportController::class,'GetExerciseWhereid']);
 
-    Route::get('addpoint/{id}',[\App\Http\Controllers\AwardController::class,'EndOfExerciseToAddPoint']);
+    Route::get('addpoint/{id}',[\App\Http\Controllers\AwardController::class,'EndOfExerciseToAddPoint']);//////
     Route::get('buywithpoints/{id}/{id1}',[\App\Http\Controllers\AwardController::class,'BuyWithPoint']);
     Route::post('addproduct',[\App\Http\Controllers\ProductController::class,'addproduct'])->middleware('admin');
     Route::get('updatepayment/{id}',[\App\Http\Controllers\OrderController::class,'UpdatePayment'])->middleware('admin');
@@ -82,6 +81,8 @@ Route::get('GetExercise/{id}',[\App\Http\Controllers\ReportController::class,'Ge
     Route::post('advice',[\App\Http\Controllers\Coach::class,'advice'])->middleware('couch');
     ////
     Route::get('Get/{id}',[\App\Http\Controllers\Coach::class,'getadvice']);
+    ///////
+    Route::get('getrequest/{id}',[\App\Http\Controllers\Coach::class,'getrquist'])->middleware('couch');
     /////
     Route::get('experience/{id}/{rating}',[\App\Http\Controllers\Coach::class,'good']);
     /////
@@ -107,7 +108,7 @@ Route::get('GetExercise/{id}',[\App\Http\Controllers\ReportController::class,'Ge
     Route::post('exercise',[ExerciseController::class,'store'])->middleware('admin');
     ////
     Route::get('search/{id}',[ExerciseController::class,'Search']);
-    ////
+    ////requestAdvice
     Route::resource('level', LevelsController::class);
     ////
     Route::resource('categaroy',CategoryController::class);

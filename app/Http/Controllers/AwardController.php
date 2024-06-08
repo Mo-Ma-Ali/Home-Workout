@@ -13,7 +13,8 @@ use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+///////////////////////////////////
+////////////////////////bitcoines
 class AwardController extends Controller
 {
 public function BuyWithPoint(Request $request,$id,$id1)

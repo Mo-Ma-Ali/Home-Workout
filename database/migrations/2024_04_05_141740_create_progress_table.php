@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('height');
             $table->enum('gender',['feminine','man']);
             $table->integer('Target_weight')->default(0);
-            $table->double('Time_to_reach_the_specified_weight')->default(0);
+            $table->integer('Time_to_reach_the_specified_weight')->default(0);
             $table->integer('Calories');
             $table->timestamps();
         });

@@ -31,7 +31,7 @@ class Coach extends Controller
 
     }
 
-    public function requestAdvice(Request $request)
+    public function requestAdvice(Request $request)///////////////////////////////////////////
     {
         $user = Auth::user();
         $couch = $request->input('couch_id');
@@ -100,7 +100,11 @@ class Coach extends Controller
         return response()->json(['message' => 'success','data'=>$user]);
     }
 
-
+    public function getrequest($id)
+    {
+        $user=Advice::where('trainer_id',$id)->get();
+        return response()->json(['message' => 'success','data'=>$user]);
+    }
 
     public function good($id,$rating)
     {

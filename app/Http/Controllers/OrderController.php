@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 // Get Order with Products
 
-
+//////////////////////////////////////////
 class OrderController extends Controller
 {
     public function AddToCart(Request $request,$id)
