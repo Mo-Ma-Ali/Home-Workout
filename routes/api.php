@@ -117,7 +117,7 @@ Route::get('GetExercise/{id}',[\App\Http\Controllers\ReportController::class,'Ge
 
     Route::post('requestAdvice',[Coach::class,'requestAdvice']);///////
     //////
-    Route::post('/verifyExercise/{id}',[ExerciseCompletionController::class,'verifyExercise']);
+    Route::post('/verifyExercise',[ExerciseCompletionController::class,'verifyExercise']);
     //////
     Route::get('/getExerciseRecord',[ExerciseCompletionController::class,'getExerciseRecord']);
     /////
