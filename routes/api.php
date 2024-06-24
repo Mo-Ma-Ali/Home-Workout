@@ -13,6 +13,7 @@ use App\Http\Controllers\verifyController;
 use App\Http\Controllers\Workout\CategoryController;
 use App\Http\Controllers\Workout\ExerciseController;
 use App\Http\Controllers\Workout\LevelsController;
+use http\Client\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('Tra',[\App\Http\Controllers\Translate::class,'Translate']);
+Route::get('TraE',[\App\Http\Controllers\Translate::class,'TranslateExercise']);
 Route::post('Payment',[\App\Http\Controllers\Payment::class,'makePayment']);
 
 
