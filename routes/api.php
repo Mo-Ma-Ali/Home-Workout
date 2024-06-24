@@ -88,7 +88,7 @@ Route::middleware('auth:sanctum')->group(function (){
     ////
     Route::get('Get/{id}',[\App\Http\Controllers\Coach::class,'getadvice']);
     ///////
-    Route::get('getrequest/{id}',[\App\Http\Controllers\Coach::class,'getrquist'])->middleware('couch');
+    Route::get('getrequest',[\App\Http\Controllers\Coach::class,'getrequest'])->middleware('couch');
     /////
     Route::get('experience/{id}/{rating}',[\App\Http\Controllers\Coach::class,'good']);
     /////
