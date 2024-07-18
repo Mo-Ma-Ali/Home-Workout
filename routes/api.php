@@ -13,13 +13,19 @@ use App\Http\Controllers\verifyController;
 use App\Http\Controllers\Workout\CategoryController;
 use App\Http\Controllers\Workout\ExerciseController;
 use App\Http\Controllers\Workout\LevelsController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
+
+use Google\Client as GoogleClient;
+use Illuminate\Support\Facades\Http;
+
 
 /*
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
+|"project_id": "training-app-12f6c",
+  "private_key_id": "cf401b8578f59fb7627c80cc8e0ebfa5367b883a",
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "api" middleware group. Make something great!
@@ -28,6 +34,62 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('Payment',[\App\Http\Controllers\Payment::class,'makePayment']);
 
+Route::get('/testnotification', function () {
+
+    $fcm = "dwkcDf0hSYOdSWj_OiCaol:APA91bFSrhbeUf5DcMLDePwoNe6y0VtjwU_gumWLN2uq4h1wISXp30j0XT1zNIIkpbv8NxZ9APRE9wirQlT7vk2ruoS_7NWOI08BTm0Y_M858zfBXwZu01ZURwE-i6CN3SWMzeY-r-7K";
+
+    $title = "اشعار جديد";
+    $description = "تيست تيست تيست";
+
+    $credentialsFilePath = "/json/file.json";  // local
+    $credentialsFilePath = Http::get(asset('json/file.json')); // in server
+    $client = new GoogleClient();
+    $client->setAuthConfig($credentialsFilePath);
+    $client->addScope('https://www.googleapis.com/auth/firebase.messaging');
+    $client->refreshTokenWithAssertion();
+    $token = $client->getAccessToken();
+
+    $access_token = $token['access_token'];
+
+    $headers = [
+        "Authorization: Bearer $access_token",
+        'Content-Type: application/json'
+    ];
+
+    $data = [
+        "message" => [
+            "token" => $fcm,
+            "notification" => [
+                "title" => $title,
+                "body" => $description,
+            ],
+        ]
+    ];
+    $payload = json_encode($data);
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/v1/projects/training-app-12f6c/messages:send');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    curl_setopt($ch, CURLOPT_VERBOSE, true); // Enable verbose output for debugging
+    $response = curl_exec($ch);
+    $err = curl_error($ch);
+    curl_close($ch);
+
+    if ($err) {
+        return response()->json([
+            'message' => 'Curl Error: ' . $err
+        ], 500);
+    } else {
+        return response()->json([
+            'message' => 'Notification has been sent',
+            'response' => json_decode($response, true)
+        ]);
+    }
+})->name('testnotification');
 
 Route::get('GetCategory',[\App\Http\Controllers\ProductController::class,'GetCategoryProduct']);
 Route::get('GetProduct/{id}',[\App\Http\Controllers\ProductController::class,'GetProductFromId']);

@@ -101,16 +101,22 @@ class Coach extends Controller
 
     public function getadvice($id)
     {
-        $user=Advice::query()->where('couch_id',$id)->get();
+        $trainer = Auth::id();
+        $user=Advice::where('couch_id',$id)->where('trainer_id',$trainer)->get();
         return response()->json(['message' => 'success','data'=>$user]);
     }
-
-    public function getrequest()
+    public function getRequest()
     {
         $couch = Auth::user();
-        $user=Advice::where('couch_id',$couch->id)->where('request_advice',1)->get();
-        return response()->json(['message' => 'success','data'=>$user]);
+        $users = Advice::where('couch_id', $couch->id)->where('request_advice', 1)->get();
+
+        if ($users->isEmpty()) {
+            return response()->json(['message' => 'There are no new requests']);
+        }
+
+        return response()->json(['message' => 'Success', 'data' => $users]);
     }
+
 
     public function good($id,$rating)
     {
@@ -120,7 +126,7 @@ class Coach extends Controller
        {
         Advice::where('id',$id)->update(['evaluation'=>$array[$rating]]);
         $massege = [
-            "Sorry to hear that. We'll work hard to improve your experience!",
+        "Sorry to hear that. We'll work hard to improve your experience!",
         "We appreciate your feedback. We'll strive to do better!",
         "Thank you for your positive feedback. We're glad you enjoyed it!",
         "Fantastic! We're thrilled to hear that you had an excellent experience!"

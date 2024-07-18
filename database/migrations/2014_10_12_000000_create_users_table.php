@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('points')->default(0);
             $table->string('code')->nullable();
             $table->dateTime('expire_at')->nullable();
+            $table->string('fcm_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
