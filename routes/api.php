@@ -32,6 +32,8 @@ use Illuminate\Support\Facades\Http;
 |
 */
 
+Route::get('Tra',[\App\Http\Controllers\Translate::class,'Translate']);
+Route::get('TraE',[\App\Http\Controllers\Translate::class,'TranslateExercise']);
 Route::post('Payment',[\App\Http\Controllers\Payment::class,'makePayment']);
 
 Route::get('/testnotification', function () {
