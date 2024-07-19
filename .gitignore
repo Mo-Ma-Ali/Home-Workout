@@ -17,5 +17,5 @@ yarn-error.log
 /.idea
 /.vscode
 /app/Http/Controllers/ChatController.php
-/training-app-12f6c-cf401b8578f5.json
-/public/json/file.json
+public/json/file.json
+training-app-12f6c-cf401b8578f5.json
