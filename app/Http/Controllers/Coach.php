@@ -102,7 +102,7 @@ class Coach extends Controller
     public function getadvice($id)
     {
         $trainer = Auth::id();
-        $user=Advice::where('couch_id',$id)->where('trainer_id',$trainer)->get();
+        $user=Advice::where('couch_id',$id)->where('trainer_id',$trainer)->where('request_advice', false)->get();
         return response()->json(['message' => 'success','data'=>$user]);
     }
     public function getRequest()
@@ -135,14 +135,4 @@ class Coach extends Controller
     }
     return response()->json(['message'=>'WTF??']);
     }
-    // public function middle($id)
-    // {
-    //     $middle=Advice::query()->where('id',$id)->update(['evaluation'=>'good']);
-    //     return response()->json(['message'=>'Thank You']);
-    // }
-    // public function excellent($id)
-    // {
-    //     $excellent=Advice::query()->update(['evaluation'=>'excellent']);
-    //     return response()->json(['message'=>'Welcome']);
-    // }
 }
