@@ -16,8 +16,7 @@ use App\Http\Controllers\Workout\LevelsController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 
-use Google\Client as GoogleClient;
-use Illuminate\Support\Facades\Http;
+
 
 
 /*
@@ -31,6 +30,8 @@ use Illuminate\Support\Facades\Http;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+
 
 Route::get('Tra',[\App\Http\Controllers\Translate::class,'Translate']);
 Route::get('TraE',[\App\Http\Controllers\Translate::class,'TranslateExercise']);
